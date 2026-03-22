@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_097c1882eca712c2996e492c1a3584d2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position:fixed;bottom:30px;left:30px;z-index:1000;
+background:rgba(0,0,0,0.8);padding:15px;border-radius:8px;color:white;font-size:13px">
+<b>OrbitClean — Sentinel-2 Detections</b><br>
+Thanisandra Ward · 20 March 2026<br><br>
+🔴 Satellite detected dump (48 sites)<br>
+🟢 Field GPS ground truth (7 March)<br>
+🟡 Validated match — 73m apart<br><br>
+<small>Method: NDBI + SAVI + BSI · Random Forest</small>
+</div>
+    
+            <div class="folium-map" id="map_097c1882eca712c2996e492c1a3584d2" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_097c1882eca712c2996e492c1a3584d2 = L.map(
+                "map_097c1882eca712c2996e492c1a3584d2",
+                {
+                    center: [13.058, 77.63],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5ac22698edcd6e8ce69a8e04a97a6624 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5ac22698edcd6e8ce69a8e04a97a6624.addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+            var circle_marker_f353c0910d0c360c0d2ff964eaaa4f0a = L.circleMarker(
+                [13.068485, 77.635376],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_3988cff388b1b13e8bea98ed96f78d6f = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_4b12100206239c3feb86053b709ac884 = $(`<div id="html_4b12100206239c3feb86053b709ac884" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-020</b><br>             Area: 700m²<br>             Risk: 0.26<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_3988cff388b1b13e8bea98ed96f78d6f.setContent(html_4b12100206239c3feb86053b709ac884);
+            
+        
+
+        circle_marker_f353c0910d0c360c0d2ff964eaaa4f0a.bindPopup(popup_3988cff388b1b13e8bea98ed96f78d6f)
+        ;
+
+        
+    
+    
+            var circle_marker_89addf7591989da114c559dd2d360492 = L.circleMarker(
+                [13.068405, 77.635652],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_c33e76617f4594360f6b698dc2ab67d1 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_9be9f69f55b6e43dedfe416a777f8e79 = $(`<div id="html_9be9f69f55b6e43dedfe416a777f8e79" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-022</b><br>             Area: 700m²<br>             Risk: 0.21<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_c33e76617f4594360f6b698dc2ab67d1.setContent(html_9be9f69f55b6e43dedfe416a777f8e79);
+            
+        
+
+        circle_marker_89addf7591989da114c559dd2d360492.bindPopup(popup_c33e76617f4594360f6b698dc2ab67d1)
+        ;
+
+        
+    
+    
+            var circle_marker_1b82eaa04766f7e0853ae9fcb1fe8512 = L.circleMarker(
+                [13.068002, 77.635387],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_5702c8a258534364cf033f52569a92be = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_ac9da3d0842c25b446721ae7283e8fff = $(`<div id="html_ac9da3d0842c25b446721ae7283e8fff" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-031</b><br>             Area: 500m²<br>             Risk: 0.125<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_5702c8a258534364cf033f52569a92be.setContent(html_ac9da3d0842c25b446721ae7283e8fff);
+            
+        
+
+        circle_marker_1b82eaa04766f7e0853ae9fcb1fe8512.bindPopup(popup_5702c8a258534364cf033f52569a92be)
+        ;
+
+        
+    
+    
+            var circle_marker_91ead98394b380f930981ced2fce2aea = L.circleMarker(
+                [13.067724, 77.621999],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_b4b21e3e954febe719068ea28a356eaf = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_22d418c7f1976f92767ddcb96da020ef = $(`<div id="html_22d418c7f1976f92767ddcb96da020ef" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-040</b><br>             Area: 1400m²<br>             Risk: 0.192<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_b4b21e3e954febe719068ea28a356eaf.setContent(html_22d418c7f1976f92767ddcb96da020ef);
+            
+        
+
+        circle_marker_91ead98394b380f930981ced2fce2aea.bindPopup(popup_b4b21e3e954febe719068ea28a356eaf)
+        ;
+
+        
+    
+    
+            var circle_marker_9a082401e73ea1b5e1be520612880c24 = L.circleMarker(
+                [13.067453, 77.62255],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_5804dc7897a4bb73b17f55900c729e89 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_aed3e1a9ea1605609706f1f602ce9f7e = $(`<div id="html_aed3e1a9ea1605609706f1f602ce9f7e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-054</b><br>             Area: 1100m²<br>             Risk: 0.166<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_5804dc7897a4bb73b17f55900c729e89.setContent(html_aed3e1a9ea1605609706f1f602ce9f7e);
+            
+        
+
+        circle_marker_9a082401e73ea1b5e1be520612880c24.bindPopup(popup_5804dc7897a4bb73b17f55900c729e89)
+        ;
+
+        
+    
+    
+            var circle_marker_8bc1243ba83026893d90905d65702b6c = L.circleMarker(
+                [13.067046, 77.633478],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_1f8e03cc5d62a6edf9817833fb24c814 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_f66c88f8d513e23f63f0681d46e0437e = $(`<div id="html_f66c88f8d513e23f63f0681d46e0437e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-058</b><br>             Area: 700m²<br>             Risk: 0.136<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_1f8e03cc5d62a6edf9817833fb24c814.setContent(html_f66c88f8d513e23f63f0681d46e0437e);
+            
+        
+
+        circle_marker_8bc1243ba83026893d90905d65702b6c.bindPopup(popup_1f8e03cc5d62a6edf9817833fb24c814)
+        ;
+
+        
+    
+    
+            var circle_marker_170e4cd810fb5baff0ac27947cda4205 = L.circleMarker(
+                [13.067088, 77.621789],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_0c7342709e64cdb389ebe3d56d53786d = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_cfde71ac6c66745f9c1e1f84e3723e96 = $(`<div id="html_cfde71ac6c66745f9c1e1f84e3723e96" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-060</b><br>             Area: 700m²<br>             Risk: 0.174<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_0c7342709e64cdb389ebe3d56d53786d.setContent(html_cfde71ac6c66745f9c1e1f84e3723e96);
+            
+        
+
+        circle_marker_170e4cd810fb5baff0ac27947cda4205.bindPopup(popup_0c7342709e64cdb389ebe3d56d53786d)
+        ;
+
+        
+    
+    
+            var circle_marker_8be2dae59cb9439e45472241cdeae009 = L.circleMarker(
+                [13.067052, 77.620828],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_1ac464ebf7f50b845076c79c46d7ea3e = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_acbfe15803a41b5b7f47fbe6e403d88f = $(`<div id="html_acbfe15803a41b5b7f47fbe6e403d88f" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-063</b><br>             Area: 1100m²<br>             Risk: 0.202<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_1ac464ebf7f50b845076c79c46d7ea3e.setContent(html_acbfe15803a41b5b7f47fbe6e403d88f);
+            
+        
+
+        circle_marker_8be2dae59cb9439e45472241cdeae009.bindPopup(popup_1ac464ebf7f50b845076c79c46d7ea3e)
+        ;
+
+        
+    
+    
+            var circle_marker_30bef244903fa69a291ab96f7efc4c69 = L.circleMarker(
+                [13.065704, 77.621884],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_e763c44cf7cfeffe3ffdee782b8ffbb3 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_6f9c12115c15ba19e6829a148e1c2c4d = $(`<div id="html_6f9c12115c15ba19e6829a148e1c2c4d" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-086</b><br>             Area: 600m²<br>             Risk: 0.156<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_e763c44cf7cfeffe3ffdee782b8ffbb3.setContent(html_6f9c12115c15ba19e6829a148e1c2c4d);
+            
+        
+
+        circle_marker_30bef244903fa69a291ab96f7efc4c69.bindPopup(popup_e763c44cf7cfeffe3ffdee782b8ffbb3)
+        ;
+
+        
+    
+    
+            var circle_marker_bae8136d922041db7a79236847bd8d26 = L.circleMarker(
+                [13.065468, 77.634125],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_60f5945237264d35aa00e8c18c19644d = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_04770d3b86c820a193d6ef4d82448587 = $(`<div id="html_04770d3b86c820a193d6ef4d82448587" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-094</b><br>             Area: 500m²<br>             Risk: 0.14<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_60f5945237264d35aa00e8c18c19644d.setContent(html_04770d3b86c820a193d6ef4d82448587);
+            
+        
+
+        circle_marker_bae8136d922041db7a79236847bd8d26.bindPopup(popup_60f5945237264d35aa00e8c18c19644d)
+        ;
+
+        
+    
+    
+            var circle_marker_f88b13c2493bc2966922bac536660547 = L.circleMarker(
+                [13.065381, 77.624038],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_515353af495d9b0316015a37b5dfc627 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_e6e71bce4978f60d5d9ddae707c2cd6b = $(`<div id="html_e6e71bce4978f60d5d9ddae707c2cd6b" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-096</b><br>             Area: 1600m²<br>             Risk: 0.184<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_515353af495d9b0316015a37b5dfc627.setContent(html_e6e71bce4978f60d5d9ddae707c2cd6b);
+            
+        
+
+        circle_marker_f88b13c2493bc2966922bac536660547.bindPopup(popup_515353af495d9b0316015a37b5dfc627)
+        ;
+
+        
+    
+    
+            var circle_marker_c73271314f0f37d6fb8ece570e5a13d8 = L.circleMarker(
+                [13.065052, 77.624451],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_3c32b01b495ed4c26c64b46cbf8849e5 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_c69ead432dda91c076b8909a88e74b77 = $(`<div id="html_c69ead432dda91c076b8909a88e74b77" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-103</b><br>             Area: 1100m²<br>             Risk: 0.175<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_3c32b01b495ed4c26c64b46cbf8849e5.setContent(html_c69ead432dda91c076b8909a88e74b77);
+            
+        
+
+        circle_marker_c73271314f0f37d6fb8ece570e5a13d8.bindPopup(popup_3c32b01b495ed4c26c64b46cbf8849e5)
+        ;
+
+        
+    
+    
+            var circle_marker_180c5226d50f4fa7cd50c69a8b6dd7b2 = L.circleMarker(
+                [13.064505, 77.624015],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_5f8af179177330a2d646aa9395e76330 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_0774bb3a7341ed383ee16213f0b64c75 = $(`<div id="html_0774bb3a7341ed383ee16213f0b64c75" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-111</b><br>             Area: 500m²<br>             Risk: 0.134<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_5f8af179177330a2d646aa9395e76330.setContent(html_0774bb3a7341ed383ee16213f0b64c75);
+            
+        
+
+        circle_marker_180c5226d50f4fa7cd50c69a8b6dd7b2.bindPopup(popup_5f8af179177330a2d646aa9395e76330)
+        ;
+
+        
+    
+    
+            var circle_marker_b5bed1e0e3860a9e748401085fce07b8 = L.circleMarker(
+                [13.063556, 77.636098],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_4ddf651dc00a94b3259d1b273d5b7296 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_5745e011375e99cf5d702924bc91199d = $(`<div id="html_5745e011375e99cf5d702924bc91199d" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-127</b><br>             Area: 600m²<br>             Risk: 0.189<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_4ddf651dc00a94b3259d1b273d5b7296.setContent(html_5745e011375e99cf5d702924bc91199d);
+            
+        
+
+        circle_marker_b5bed1e0e3860a9e748401085fce07b8.bindPopup(popup_4ddf651dc00a94b3259d1b273d5b7296)
+        ;
+
+        
+    
+    
+            var circle_marker_7ab910d867c648b525377b05d0bbadae = L.circleMarker(
+                [13.062683, 77.63346],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_2ab29f4bf3dae5183d870ebab7c33781 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_8400c73d744da55975b635947deb84d8 = $(`<div id="html_8400c73d744da55975b635947deb84d8" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-145</b><br>             Area: 1000m²<br>             Risk: 0.163<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_2ab29f4bf3dae5183d870ebab7c33781.setContent(html_8400c73d744da55975b635947deb84d8);
+            
+        
+
+        circle_marker_7ab910d867c648b525377b05d0bbadae.bindPopup(popup_2ab29f4bf3dae5183d870ebab7c33781)
+        ;
+
+        
+    
+    
+            var circle_marker_2ed52fcca931408209edd7abd401d3cf = L.circleMarker(
+                [13.062446, 77.634572],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_0d5e4e78101686f300c926cec5837c44 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_bd135bde52f03649c708801714a0d19e = $(`<div id="html_bd135bde52f03649c708801714a0d19e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-151</b><br>             Area: 500m²<br>             Risk: 0.156<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_0d5e4e78101686f300c926cec5837c44.setContent(html_bd135bde52f03649c708801714a0d19e);
+            
+        
+
+        circle_marker_2ed52fcca931408209edd7abd401d3cf.bindPopup(popup_0d5e4e78101686f300c926cec5837c44)
+        ;
+
+        
+    
+    
+            var circle_marker_8d8cd4ff04517802aab37f74d440eb87 = L.circleMarker(
+                [13.061938, 77.636039],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_927df772d0bae6a5209365eca815b2b0 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_f01890391e5d8ba36834bea784eff52d = $(`<div id="html_f01890391e5d8ba36834bea784eff52d" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-168</b><br>             Area: 800m²<br>             Risk: 0.121<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_927df772d0bae6a5209365eca815b2b0.setContent(html_f01890391e5d8ba36834bea784eff52d);
+            
+        
+
+        circle_marker_8d8cd4ff04517802aab37f74d440eb87.bindPopup(popup_927df772d0bae6a5209365eca815b2b0)
+        ;
+
+        
+    
+    
+            var circle_marker_1b877f7f3c941ad82340ef333ec7ffb0 = L.circleMarker(
+                [13.061538, 77.633271],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_ac819b860e6ce44c5e14eb1a83eeaa55 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_69b6c210cd8ee3a7c50ba374730b94ea = $(`<div id="html_69b6c210cd8ee3a7c50ba374730b94ea" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-170</b><br>             Area: 1300m²<br>             Risk: 0.133<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_ac819b860e6ce44c5e14eb1a83eeaa55.setContent(html_69b6c210cd8ee3a7c50ba374730b94ea);
+            
+        
+
+        circle_marker_1b877f7f3c941ad82340ef333ec7ffb0.bindPopup(popup_ac819b860e6ce44c5e14eb1a83eeaa55)
+        ;
+
+        
+    
+    
+            var circle_marker_6fcaeb8894fae1fdf7e7fd6bc5974022 = L.circleMarker(
+                [13.061731, 77.635695],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_0cfd6f34ffb8790b57fecf54aa744a68 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_0a1c41482026750932f74936c1acfede = $(`<div id="html_0a1c41482026750932f74936c1acfede" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-172</b><br>             Area: 1200m²<br>             Risk: 0.136<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_0cfd6f34ffb8790b57fecf54aa744a68.setContent(html_0a1c41482026750932f74936c1acfede);
+            
+        
+
+        circle_marker_6fcaeb8894fae1fdf7e7fd6bc5974022.bindPopup(popup_0cfd6f34ffb8790b57fecf54aa744a68)
+        ;
+
+        
+    
+    
+            var circle_marker_76e4335a673b454afb0c712baf52200a = L.circleMarker(
+                [13.061438, 77.616417],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_4a1eda4be1646a977564a0606cd85a86 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_d06f9df064c8b8e2408335c1cb543a06 = $(`<div id="html_d06f9df064c8b8e2408335c1cb543a06" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-186</b><br>             Area: 1200m²<br>             Risk: 0.304<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_4a1eda4be1646a977564a0606cd85a86.setContent(html_d06f9df064c8b8e2408335c1cb543a06);
+            
+        
+
+        circle_marker_76e4335a673b454afb0c712baf52200a.bindPopup(popup_4a1eda4be1646a977564a0606cd85a86)
+        ;
+
+        
+    
+    
+            var circle_marker_541a988d559e03d57757704d39d5c5d0 = L.circleMarker(
+                [13.061352, 77.615944],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_16517ebd44704eaf2d89b991319b36a8 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_20f5fddfbdcff2731c844963b1e6349d = $(`<div id="html_20f5fddfbdcff2731c844963b1e6349d" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-189</b><br>             Area: 800m²<br>             Risk: 0.267<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_16517ebd44704eaf2d89b991319b36a8.setContent(html_20f5fddfbdcff2731c844963b1e6349d);
+            
+        
+
+        circle_marker_541a988d559e03d57757704d39d5c5d0.bindPopup(popup_16517ebd44704eaf2d89b991319b36a8)
+        ;
+
+        
+    
+    
+            var circle_marker_19f81bd61359df251204476489434fb2 = L.circleMarker(
+                [13.061223, 77.615332],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_5f55e5e65579f853136c8d6ce29f2c21 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_7c129847a599a4a365dc67689dcc2738 = $(`<div id="html_7c129847a599a4a365dc67689dcc2738" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-190</b><br>             Area: 800m²<br>             Risk: 0.336<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_5f55e5e65579f853136c8d6ce29f2c21.setContent(html_7c129847a599a4a365dc67689dcc2738);
+            
+        
+
+        circle_marker_19f81bd61359df251204476489434fb2.bindPopup(popup_5f55e5e65579f853136c8d6ce29f2c21)
+        ;
+
+        
+    
+    
+            var circle_marker_dee2f472f9ab90de1bcad28c65904835 = L.circleMarker(
+                [13.060949, 77.62184],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_5d83588431cf5411e772af82c21568c8 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_8d366c685e067cdd8c5521bc03e4a1a5 = $(`<div id="html_8d366c685e067cdd8c5521bc03e4a1a5" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-194</b><br>             Area: 500m²<br>             Risk: 0.191<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_5d83588431cf5411e772af82c21568c8.setContent(html_8d366c685e067cdd8c5521bc03e4a1a5);
+            
+        
+
+        circle_marker_dee2f472f9ab90de1bcad28c65904835.bindPopup(popup_5d83588431cf5411e772af82c21568c8)
+        ;
+
+        
+    
+    
+            var circle_marker_14e1f0f56d95c1456da790d0a64e39c5 = L.circleMarker(
+                [13.060808, 77.638388],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_3f7833ae76dc6f8142b2db3785c50899 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_679c53b97dc08d9d5e08d30dad316e3f = $(`<div id="html_679c53b97dc08d9d5e08d30dad316e3f" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-196</b><br>             Area: 600m²<br>             Risk: 0.147<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_3f7833ae76dc6f8142b2db3785c50899.setContent(html_679c53b97dc08d9d5e08d30dad316e3f);
+            
+        
+
+        circle_marker_14e1f0f56d95c1456da790d0a64e39c5.bindPopup(popup_3f7833ae76dc6f8142b2db3785c50899)
+        ;
+
+        
+    
+    
+            var circle_marker_5a326590c466c73a32164cbf5670f8aa = L.circleMarker(
+                [13.058641, 77.625426],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_19d3be085b32c728ed606b32477e4eba = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_b35f939c33a230c59176d36628315823 = $(`<div id="html_b35f939c33a230c59176d36628315823" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-214</b><br>             Area: 1700m²<br>             Risk: 0.149<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_19d3be085b32c728ed606b32477e4eba.setContent(html_b35f939c33a230c59176d36628315823);
+            
+        
+
+        circle_marker_5a326590c466c73a32164cbf5670f8aa.bindPopup(popup_19d3be085b32c728ed606b32477e4eba)
+        ;
+
+        
+    
+    
+            var circle_marker_700bd42975eed14e064cb8b40f477f6d = L.circleMarker(
+                [13.057161, 77.644302],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_df0812fe7c009ce62cba5a73a6d6c3b2 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_71eb050de5452ced1bba038823ee55dd = $(`<div id="html_71eb050de5452ced1bba038823ee55dd" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-233</b><br>             Area: 500m²<br>             Risk: 0.133<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_df0812fe7c009ce62cba5a73a6d6c3b2.setContent(html_71eb050de5452ced1bba038823ee55dd);
+            
+        
+
+        circle_marker_700bd42975eed14e064cb8b40f477f6d.bindPopup(popup_df0812fe7c009ce62cba5a73a6d6c3b2)
+        ;
+
+        
+    
+    
+            var circle_marker_3baaa563ad91d974271dfca83cbd3eec = L.circleMarker(
+                [13.056949, 77.629794],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_83388a24f92241f0dbc7371e35474c9c = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_2948c84f0f167e7ff4445e448dc72e44 = $(`<div id="html_2948c84f0f167e7ff4445e448dc72e44" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-237</b><br>             Area: 1100m²<br>             Risk: 0.287<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_83388a24f92241f0dbc7371e35474c9c.setContent(html_2948c84f0f167e7ff4445e448dc72e44);
+            
+        
+
+        circle_marker_3baaa563ad91d974271dfca83cbd3eec.bindPopup(popup_83388a24f92241f0dbc7371e35474c9c)
+        ;
+
+        
+    
+    
+            var circle_marker_afbe4674e959b2f25c5a1da854b5a506 = L.circleMarker(
+                [13.056467, 77.633243],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_692393365dd46d1c1e11eaf8c0207ea5 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_0584a1a3fc666853cb4434d3b8e08b4e = $(`<div id="html_0584a1a3fc666853cb4434d3b8e08b4e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-240</b><br>             Area: 1500m²<br>             Risk: 0.244<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_692393365dd46d1c1e11eaf8c0207ea5.setContent(html_0584a1a3fc666853cb4434d3b8e08b4e);
+            
+        
+
+        circle_marker_afbe4674e959b2f25c5a1da854b5a506.bindPopup(popup_692393365dd46d1c1e11eaf8c0207ea5)
+        ;
+
+        
+    
+    
+            var circle_marker_e90aa886d4ab08b1faf7f583e5e3c41b = L.circleMarker(
+                [13.055682, 77.623618],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_e577ac45ddb020e54ea6cfbc7ef4f276 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_40d90b31896427b59f20a856e955bccb = $(`<div id="html_40d90b31896427b59f20a856e955bccb" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-244</b><br>             Area: 1000m²<br>             Risk: 0.28<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_e577ac45ddb020e54ea6cfbc7ef4f276.setContent(html_40d90b31896427b59f20a856e955bccb);
+            
+        
+
+        circle_marker_e90aa886d4ab08b1faf7f583e5e3c41b.bindPopup(popup_e577ac45ddb020e54ea6cfbc7ef4f276)
+        ;
+
+        
+    
+    
+            var circle_marker_7e87cf1b4c256ac6117ff8ce03a3c8d8 = L.circleMarker(
+                [13.051308, 77.619967],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_f1d2751cf0c603a0d8e796d1e92922c1 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_b263baecd600b7de5c289a851b858c57 = $(`<div id="html_b263baecd600b7de5c289a851b858c57" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-256</b><br>             Area: 1100m²<br>             Risk: 0.205<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_f1d2751cf0c603a0d8e796d1e92922c1.setContent(html_b263baecd600b7de5c289a851b858c57);
+            
+        
+
+        circle_marker_7e87cf1b4c256ac6117ff8ce03a3c8d8.bindPopup(popup_f1d2751cf0c603a0d8e796d1e92922c1)
+        ;
+
+        
+    
+    
+            var circle_marker_88c0eecfe885030e07cb7b87a9d26a89 = L.circleMarker(
+                [13.051002, 77.617477],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_059e7bf5807fe6f75573913247a8a9ed = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_6795189cfd597a9159e4d589d03e46cc = $(`<div id="html_6795189cfd597a9159e4d589d03e46cc" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-257</b><br>             Area: 500m²<br>             Risk: 0.13<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_059e7bf5807fe6f75573913247a8a9ed.setContent(html_6795189cfd597a9159e4d589d03e46cc);
+            
+        
+
+        circle_marker_88c0eecfe885030e07cb7b87a9d26a89.bindPopup(popup_059e7bf5807fe6f75573913247a8a9ed)
+        ;
+
+        
+    
+    
+            var circle_marker_bdb0f95487276390772d2fab03bf734c = L.circleMarker(
+                [13.050447, 77.616677],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_f0bc2d3c29d17a09ae487eba1e872e04 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_321ec5ba2e5488e6ffbc15cd101f6246 = $(`<div id="html_321ec5ba2e5488e6ffbc15cd101f6246" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-264</b><br>             Area: 1900m²<br>             Risk: 0.194<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_f0bc2d3c29d17a09ae487eba1e872e04.setContent(html_321ec5ba2e5488e6ffbc15cd101f6246);
+            
+        
+
+        circle_marker_bdb0f95487276390772d2fab03bf734c.bindPopup(popup_f0bc2d3c29d17a09ae487eba1e872e04)
+        ;
+
+        
+    
+    
+            var circle_marker_4492eda10d9102703f82d319db6b8f22 = L.circleMarker(
+                [13.050424, 77.617218],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_2ea32c9f07e51901adcd16eef3ea6de0 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_ff48b126235b2665ac8dca5227d312cf = $(`<div id="html_ff48b126235b2665ac8dca5227d312cf" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-265</b><br>             Area: 1100m²<br>             Risk: 0.171<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_2ea32c9f07e51901adcd16eef3ea6de0.setContent(html_ff48b126235b2665ac8dca5227d312cf);
+            
+        
+
+        circle_marker_4492eda10d9102703f82d319db6b8f22.bindPopup(popup_2ea32c9f07e51901adcd16eef3ea6de0)
+        ;
+
+        
+    
+    
+            var circle_marker_cf053b2f0ca794a5cf799dca8aaf86cd = L.circleMarker(
+                [13.050243, 77.617676],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_a178de5b210d43e281eb26cd2e628e5c = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_e2fcf0b141a20e33fe5ef2d80eebe0d8 = $(`<div id="html_e2fcf0b141a20e33fe5ef2d80eebe0d8" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-267</b><br>             Area: 900m²<br>             Risk: 0.192<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_a178de5b210d43e281eb26cd2e628e5c.setContent(html_e2fcf0b141a20e33fe5ef2d80eebe0d8);
+            
+        
+
+        circle_marker_cf053b2f0ca794a5cf799dca8aaf86cd.bindPopup(popup_a178de5b210d43e281eb26cd2e628e5c)
+        ;
+
+        
+    
+    
+            var circle_marker_86dc5ee14feacd4cb6c567bfdb22d755 = L.circleMarker(
+                [13.049915, 77.620283],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_91033b64bf15fe98b7f352fb65c626bf = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_842d25eb66a77e1f06525910e5a7262e = $(`<div id="html_842d25eb66a77e1f06525910e5a7262e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-269</b><br>             Area: 2600m²<br>             Risk: 0.189<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_91033b64bf15fe98b7f352fb65c626bf.setContent(html_842d25eb66a77e1f06525910e5a7262e);
+            
+        
+
+        circle_marker_86dc5ee14feacd4cb6c567bfdb22d755.bindPopup(popup_91033b64bf15fe98b7f352fb65c626bf)
+        ;
+
+        
+    
+    
+            var circle_marker_2d707a55538b3a8fd5462f2826bbdd0a = L.circleMarker(
+                [13.049261, 77.622479],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_bf7d70b95c1a5fee70e27f51761e0edf = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_ad13ec0376653def11402d29d1af4779 = $(`<div id="html_ad13ec0376653def11402d29d1af4779" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-284</b><br>             Area: 2800m²<br>             Risk: 0.264<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_bf7d70b95c1a5fee70e27f51761e0edf.setContent(html_ad13ec0376653def11402d29d1af4779);
+            
+        
+
+        circle_marker_2d707a55538b3a8fd5462f2826bbdd0a.bindPopup(popup_bf7d70b95c1a5fee70e27f51761e0edf)
+        ;
+
+        
+    
+    
+            var circle_marker_beb95299ca69f03774299a7800802cff = L.circleMarker(
+                [13.04918, 77.62127],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_f9faa48872651ad1cd472fd11c60cd39 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_39f0b69909203f26bb82de7cc11361aa = $(`<div id="html_39f0b69909203f26bb82de7cc11361aa" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-285</b><br>             Area: 700m²<br>             Risk: 0.189<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_f9faa48872651ad1cd472fd11c60cd39.setContent(html_39f0b69909203f26bb82de7cc11361aa);
+            
+        
+
+        circle_marker_beb95299ca69f03774299a7800802cff.bindPopup(popup_f9faa48872651ad1cd472fd11c60cd39)
+        ;
+
+        
+    
+    
+            var circle_marker_820ee63faa3355ea3ac222f2d2eaf2a2 = L.circleMarker(
+                [13.048857, 77.624207],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_7858d3cd5d27327536b1efbe40d56391 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_fd7e911a84f28f44128e03aed1e9ce50 = $(`<div id="html_fd7e911a84f28f44128e03aed1e9ce50" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-287</b><br>             Area: 2100m²<br>             Risk: 0.397<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_7858d3cd5d27327536b1efbe40d56391.setContent(html_fd7e911a84f28f44128e03aed1e9ce50);
+            
+        
+
+        circle_marker_820ee63faa3355ea3ac222f2d2eaf2a2.bindPopup(popup_7858d3cd5d27327536b1efbe40d56391)
+        ;
+
+        
+    
+    
+            var circle_marker_2e8ddf56f7595ea6df6327fe84a19280 = L.circleMarker(
+                [13.048828, 77.62282],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_c8c09eae32f2d83e1b1382e33177adeb = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_4243e973805a1ae48767dbc46468bd29 = $(`<div id="html_4243e973805a1ae48767dbc46468bd29" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-290</b><br>             Area: 700m²<br>             Risk: 0.254<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_c8c09eae32f2d83e1b1382e33177adeb.setContent(html_4243e973805a1ae48767dbc46468bd29);
+            
+        
+
+        circle_marker_2e8ddf56f7595ea6df6327fe84a19280.bindPopup(popup_c8c09eae32f2d83e1b1382e33177adeb)
+        ;
+
+        
+    
+    
+            var circle_marker_3faa939f6e834ba611ef8095527ee52c = L.circleMarker(
+                [13.048794, 77.626005],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_683527b188254db80487b0a65363b2ac = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_f936cd4f48629f67d6ab99f4c4dee6b2 = $(`<div id="html_f936cd4f48629f67d6ab99f4c4dee6b2" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-292</b><br>             Area: 800m²<br>             Risk: 0.323<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_683527b188254db80487b0a65363b2ac.setContent(html_f936cd4f48629f67d6ab99f4c4dee6b2);
+            
+        
+
+        circle_marker_3faa939f6e834ba611ef8095527ee52c.bindPopup(popup_683527b188254db80487b0a65363b2ac)
+        ;
+
+        
+    
+    
+            var circle_marker_c6eec61c5d189ff58199f360f7f6e74a = L.circleMarker(
+                [13.048491, 77.622163],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_70323ab05ecbfd2f8a191b94f53b6c5d = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_5073beaae4eebe2c1d34be7c91d193c7 = $(`<div id="html_5073beaae4eebe2c1d34be7c91d193c7" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-296</b><br>             Area: 600m²<br>             Risk: 0.171<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_70323ab05ecbfd2f8a191b94f53b6c5d.setContent(html_5073beaae4eebe2c1d34be7c91d193c7);
+            
+        
+
+        circle_marker_c6eec61c5d189ff58199f360f7f6e74a.bindPopup(popup_70323ab05ecbfd2f8a191b94f53b6c5d)
+        ;
+
+        
+    
+    
+            var circle_marker_bc8673bc86b018ba7eff47f8beffbd7f = L.circleMarker(
+                [13.047613, 77.622614],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_a71130c3447955ff770a746e66b0f3c2 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_3443ef172a2574113e314a7fe578e387 = $(`<div id="html_3443ef172a2574113e314a7fe578e387" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-313</b><br>             Area: 600m²<br>             Risk: 0.192<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_a71130c3447955ff770a746e66b0f3c2.setContent(html_3443ef172a2574113e314a7fe578e387);
+            
+        
+
+        circle_marker_bc8673bc86b018ba7eff47f8beffbd7f.bindPopup(popup_a71130c3447955ff770a746e66b0f3c2)
+        ;
+
+        
+    
+    
+            var circle_marker_b7f032455ec5fd21cb1049cd438ac84c = L.circleMarker(
+                [13.047193, 77.618432],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_7a48949ae38a717a9d9e32a08b2f151f = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_03b93fd5c1c4f2eb8a5040ee52d9d275 = $(`<div id="html_03b93fd5c1c4f2eb8a5040ee52d9d275" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-318</b><br>             Area: 1100m²<br>             Risk: 0.184<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_7a48949ae38a717a9d9e32a08b2f151f.setContent(html_03b93fd5c1c4f2eb8a5040ee52d9d275);
+            
+        
+
+        circle_marker_b7f032455ec5fd21cb1049cd438ac84c.bindPopup(popup_7a48949ae38a717a9d9e32a08b2f151f)
+        ;
+
+        
+    
+    
+            var circle_marker_32f2c1e98e7b4c042ebd4b06229ed2f0 = L.circleMarker(
+                [13.046615, 77.627426],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_482bb420e102f3ceef43f1be10a3f6b7 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_316b1c7d14afec4708cfe7a946f88bdc = $(`<div id="html_316b1c7d14afec4708cfe7a946f88bdc" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-332</b><br>             Area: 600m²<br>             Risk: 0.152<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_482bb420e102f3ceef43f1be10a3f6b7.setContent(html_316b1c7d14afec4708cfe7a946f88bdc);
+            
+        
+
+        circle_marker_32f2c1e98e7b4c042ebd4b06229ed2f0.bindPopup(popup_482bb420e102f3ceef43f1be10a3f6b7)
+        ;
+
+        
+    
+    
+            var circle_marker_52ad500f3019ddf65d52123fea89c39f = L.circleMarker(
+                [13.046522, 77.628009],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_b8bff3d44e3b415944cc4cef3b63ea62 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_a761050df0d717a2f1acf26b603f218e = $(`<div id="html_a761050df0d717a2f1acf26b603f218e" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-334</b><br>             Area: 2000m²<br>             Risk: 0.203<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_b8bff3d44e3b415944cc4cef3b63ea62.setContent(html_a761050df0d717a2f1acf26b603f218e);
+            
+        
+
+        circle_marker_52ad500f3019ddf65d52123fea89c39f.bindPopup(popup_b8bff3d44e3b415944cc4cef3b63ea62)
+        ;
+
+        
+    
+    
+            var circle_marker_4455aee75a10f2fa678d6069e2a225bb = L.circleMarker(
+                [13.045956, 77.619709],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_1eeb265c13680c3edf36c593258f4e90 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_f0c90104063abe9659b243d93630e50a = $(`<div id="html_f0c90104063abe9659b243d93630e50a" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-350</b><br>             Area: 500m²<br>             Risk: 0.147<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_1eeb265c13680c3edf36c593258f4e90.setContent(html_f0c90104063abe9659b243d93630e50a);
+            
+        
+
+        circle_marker_4455aee75a10f2fa678d6069e2a225bb.bindPopup(popup_1eeb265c13680c3edf36c593258f4e90)
+        ;
+
+        
+    
+    
+            var circle_marker_bfa3cb8be143698a5a99265987d4de7e = L.circleMarker(
+                [13.045463, 77.620795],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_42b0d4d376c5b03a845b39164264b624 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_9f360db6d75a6dde09d30f611357bfa1 = $(`<div id="html_9f360db6d75a6dde09d30f611357bfa1" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-356</b><br>             Area: 600m²<br>             Risk: 0.205<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_42b0d4d376c5b03a845b39164264b624.setContent(html_9f360db6d75a6dde09d30f611357bfa1);
+            
+        
+
+        circle_marker_bfa3cb8be143698a5a99265987d4de7e.bindPopup(popup_42b0d4d376c5b03a845b39164264b624)
+        ;
+
+        
+    
+    
+            var circle_marker_fb547a434cb3ae14a10a81b29680b5c0 = L.circleMarker(
+                [13.045197, 77.618841],
+                {"bubblingMouseEvents": true, "color": "#ff4444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff4444", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_94e828d6180dff20fa1cc0a07fabc176 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_caad6fec098b2ac7eb37997a4529dfae = $(`<div id="html_caad6fec098b2ac7eb37997a4529dfae" style="width: 100.0%; height: 100.0%;">             <b>S2-DUMP-364</b><br>             Area: 600m²<br>             Risk: 0.217<br>             Method: Sentinel-2A NDBI/SAVI/BSI<br>             Date: 2026-03-20         </div>`)[0];
+                popup_94e828d6180dff20fa1cc0a07fabc176.setContent(html_caad6fec098b2ac7eb37997a4529dfae);
+            
+        
+
+        circle_marker_fb547a434cb3ae14a10a81b29680b5c0.bindPopup(popup_94e828d6180dff20fa1cc0a07fabc176)
+        ;
+
+        
+    
+    
+            var circle_marker_a00e0a4c43261a5f38dbfab499cc4983 = L.circleMarker(
+                [13.056306, 77.62965],
+                {"bubblingMouseEvents": true, "color": "#00ff88", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00ff88", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_0579c6a25101e515bd722113d250033e = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_fbbb3b3d150df3a57f705993d3c4a145 = $(`<div id="html_fbbb3b3d150df3a57f705993d3c4a145" style="width: 100.0%; height: 100.0%;"><b>GT-001</b><br>Patel Nangegowda Layout — Field Survey 7 Mar<br>GPS tagged on ground</div>`)[0];
+                popup_0579c6a25101e515bd722113d250033e.setContent(html_fbbb3b3d150df3a57f705993d3c4a145);
+            
+        
+
+        circle_marker_a00e0a4c43261a5f38dbfab499cc4983.bindPopup(popup_0579c6a25101e515bd722113d250033e)
+        ;
+
+        
+    
+    
+            var marker_c576b78fbf7d2dbf5e304cc6c2de8668 = L.marker(
+                [13.056306, 77.62965],
+                {
+}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+            var div_icon_f647d62ed67a4c97052a460f8e9ab0b7 = L.divIcon({
+  "html": "\u003cdiv style=\"color:#00ff88;font-weight:bold;font-size:11px\"\u003eGT-001\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_c576b78fbf7d2dbf5e304cc6c2de8668.setIcon(div_icon_f647d62ed67a4c97052a460f8e9ab0b7);
+            
+    
+            var circle_marker_72811955ac43acc9adbd7cacbaa68aa5 = L.circleMarker(
+                [13.056467, 77.629216],
+                {"bubblingMouseEvents": true, "color": "#00ff88", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00ff88", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_ec383646f7a3d33ccd5ed2c061281a53 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_32442f11fad405cd44847c91933de7e8 = $(`<div id="html_32442f11fad405cd44847c91933de7e8" style="width: 100.0%; height: 100.0%;"><b>GT-002</b><br>P&T Layout Vacant Plot — Field Survey 7 Mar<br>GPS tagged on ground</div>`)[0];
+                popup_ec383646f7a3d33ccd5ed2c061281a53.setContent(html_32442f11fad405cd44847c91933de7e8);
+            
+        
+
+        circle_marker_72811955ac43acc9adbd7cacbaa68aa5.bindPopup(popup_ec383646f7a3d33ccd5ed2c061281a53)
+        ;
+
+        
+    
+    
+            var marker_682734eb3601fb9494485a7764dab9a9 = L.marker(
+                [13.056467, 77.629216],
+                {
+}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+            var div_icon_da06708fea2a7a1b7a6ae0b3d493a365 = L.divIcon({
+  "html": "\u003cdiv style=\"color:#00ff88;font-weight:bold;font-size:11px\"\u003eGT-002\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+                marker_682734eb3601fb9494485a7764dab9a9.setIcon(div_icon_da06708fea2a7a1b7a6ae0b3d493a365);
+            
+    
+            var circle_marker_421b2c0af7ec222ee64629bfddb67039 = L.circleMarker(
+                [13.0566, 77.6297],
+                {"bubblingMouseEvents": true, "color": "#ffff00", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ffff00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_097c1882eca712c2996e492c1a3584d2);
+        
+    
+        var popup_c53aaae0a52cd5dd82867b56264aec5d = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_dcf35d54e3d7f6f8156afeddaeaff0e3 = $(`<div id="html_dcf35d54e3d7f6f8156afeddaeaff0e3" style="width: 100.0%; height: 100.0%;"><b>S2-DUMP-237</b><br>73m from GT-001<br>82m from GT-002<br>⭐ VALIDATED MATCH</div>`)[0];
+                popup_c53aaae0a52cd5dd82867b56264aec5d.setContent(html_dcf35d54e3d7f6f8156afeddaeaff0e3);
+            
+        
+
+        circle_marker_421b2c0af7ec222ee64629bfddb67039.bindPopup(popup_c53aaae0a52cd5dd82867b56264aec5d)
+        ;
+
+        
+    
+</script>
+</html>

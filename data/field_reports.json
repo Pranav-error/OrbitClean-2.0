@@ -1,0 +1,98 @@
+[
+  {
+    "id": "FIELD-09923",
+    "lat": 13.060496087897505,
+    "lon": 77.63090755092527,
+    "dominant_stream": "Dry/Blue",
+    "detections": [
+      {
+        "category": "Mixed Waste",
+        "category_raw": "mixed_waste",
+        "confidence": 0.928,
+        "swm_stream": "Dry/Blue",
+        "stream_color": "#3b82f6",
+        "disposal_instruction": "Place in BLUE bin. Segregate paper/plastic/metal. BBMP dry waste Tue/Thu/Sat.",
+        "recyclable": false,
+        "market_value_per_kg_inr": 0
+      }
+    ],
+    "timestamp": "20:50:09",
+    "image_note": null,
+    "received_at": "2026-03-21T20:50:10.149582",
+    "source": "iphone_field_capture",
+    "carbon_co2_eq_tonnes": 13.2,
+    "carbon_credit_inr": 26400.0
+  },
+  {
+    "id": "FIELD-64186",
+    "lat": 13.060599198203436,
+    "lon": 77.63042382590947,
+    "dominant_stream": "Dry/Blue",
+    "detections": [
+      {
+        "category": "Mixed Waste",
+        "category_raw": "mixed_waste",
+        "confidence": 0.976,
+        "swm_stream": "Dry/Blue",
+        "stream_color": "#3b82f6",
+        "disposal_instruction": "Place in BLUE bin. Segregate paper/plastic/metal. BBMP dry waste Tue/Thu/Sat.",
+        "recyclable": false,
+        "market_value_per_kg_inr": 0
+      }
+    ],
+    "timestamp": "20:49:24",
+    "image_note": null,
+    "received_at": "2026-03-21T20:49:24.404794",
+    "source": "iphone_field_capture",
+    "carbon_co2_eq_tonnes": 13.2,
+    "carbon_credit_inr": 26400.0
+  },
+  {
+    "id": "FIELD-64349",
+    "lat": 13.05896539513451,
+    "lon": 77.63003314366242,
+    "dominant_stream": "Dry/Blue",
+    "detections": [
+      {
+        "category": "Mixed Waste",
+        "category_raw": "mixed_waste",
+        "confidence": 0.973,
+        "swm_stream": "Dry/Blue",
+        "stream_color": "#3b82f6",
+        "disposal_instruction": "Place in BLUE bin. Segregate paper/plastic/metal. BBMP dry waste Tue/Thu/Sat.",
+        "recyclable": false,
+        "market_value_per_kg_inr": 0
+      }
+    ],
+    "timestamp": "20:32:44",
+    "image_note": null,
+    "received_at": "2026-03-21T20:32:44.388535",
+    "source": "iphone_field_capture",
+    "carbon_co2_eq_tonnes": 13.2,
+    "carbon_credit_inr": 26400.0
+  },
+  {
+    "id": "FIELD-28835",
+    "lat": 13.061479760574867,
+    "lon": 77.62951111810177,
+    "dominant_stream": "Dry/Blue",
+    "detections": [
+      {
+        "category": "Mixed Waste",
+        "category_raw": "mixed_waste",
+        "confidence": 0.969,
+        "swm_stream": "Dry/Blue",
+        "stream_color": "#3b82f6",
+        "disposal_instruction": "Place in BLUE bin. Segregate paper/plastic/metal. BBMP dry waste Tue/Thu/Sat.",
+        "recyclable": false,
+        "market_value_per_kg_inr": 0
+      }
+    ],
+    "timestamp": "20:13:48",
+    "image_note": null,
+    "received_at": "2026-03-21T20:13:49.039192",
+    "source": "iphone_field_capture",
+    "carbon_co2_eq_tonnes": 13.2,
+    "carbon_credit_inr": 26400.0
+  }
+]

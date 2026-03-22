@@ -1,0 +1,205 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-syne: var(--font-syne), "Syne", sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
+}
+
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --accent: #0ea5e9;
+  --accent-soft: #e0f2fe;
+  --risk: #ef4444;
+  --risk-high: #f97316;
+  --success: #10b981;
+  --success-soft: #ecfdf5;
+  --purple: #7c3aed;
+  --purple-soft: #f5f3ff;
+  --amber: #f59e0b;
+  --amber-soft: #fffbeb;
+  --tx: #0f172a;
+  --tx2: #334155;
+  --mu: #64748b;
+  --mu2: #94a3b8;
+  --sidebar-w: 380px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: "DM Sans", "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── Card system ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-light);
+  background: #fafbfc;
+}
+
+.card-title {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--tx);
+}
+
+/* ── Badges ── */
+.badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.badge-green  { background: #ecfdf5; color: #059669; }
+.badge-red    { background: #fef2f2; color: #dc2626; }
+.badge-blue   { background: #eff6ff; color: #2563eb; }
+.badge-amber  { background: #fffbeb; color: #d97706; }
+.badge-yellow { background: #fffbeb; color: #d97706; }
+.badge-purple { background: #f5f3ff; color: #7c3aed; }
+
+/* ── Sidebar tabs ── */
+.sidebar-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: 10px 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mu);
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sidebar-tab:hover {
+  color: var(--tx2);
+  background: #f8fafc;
+}
+
+.sidebar-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Section spacing in sidebar ── */
+.sidebar-section {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── KPI pill ── */
+.kpi-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.kpi-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.kpi-label {
+  font-size: 9px;
+  color: var(--mu2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* ── Section header ── */
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--mu);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Leaflet popups ── */
+.leaflet-popup-content-wrapper {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  border-radius: 10px;
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+.leaflet-popup-tip { background: #ffffff; border: 1px solid #e2e8f0; }
+.leaflet-popup-close-button { color: #64748b !important; font-size: 18px !important; }
+.leaflet-control-zoom a {
+  background: #ffffff !important;
+  color: #334155 !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+.leaflet-control-zoom { border: none !important; border-radius: 8px !important; overflow: hidden; }
+
+/* ── Tooltip improvements ── */
+.leaflet-tooltip {
+  font-family: "DM Sans", system-ui, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+}

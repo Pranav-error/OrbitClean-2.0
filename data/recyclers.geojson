@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "name": "recyclers_and_kabadiwala",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "REC-001",
+        "name": "SAAHAS Zero Waste",
+        "type": "Formal Recycler",
+        "accepts": ["Dry/Blue", "Hazardous/Black"],
+        "contact": "+91-80-2529-7640",
+        "whatsapp": "+918025297640",
+        "capacity_kg_day": 5000,
+        "operational_hours": "08:00-18:00"
+      },
+      "geometry": {"type": "Point", "coordinates": [77.6234, 13.0489]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "REC-002",
+        "name": "BBMP DWCC Thanisandra",
+        "type": "BBMP Collection Point",
+        "accepts": ["Wet/Green", "Dry/Blue"],
+        "contact": "+91-80-2222-0000",
+        "whatsapp": "+918022220000",
+        "capacity_kg_day": 8000,
+        "operational_hours": "06:00-10:00,16:00-20:00"
+      },
+      "geometry": {"type": "Point", "coordinates": [77.6310, 13.0601]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "REC-003",
+        "name": "Hasilu Dala Hebbal",
+        "type": "Informal Recycler Network",
+        "accepts": ["Dry/Blue"],
+        "contact": "+91-80-4111-7955",
+        "whatsapp": "+918041117955",
+        "capacity_kg_day": 2000,
+        "operational_hours": "07:00-17:00"
+      },
+      "geometry": {"type": "Point", "coordinates": [77.5940, 13.0450]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "KAB-001",
+        "name": "Raju Kabadiwala",
+        "type": "Kabadiwala",
+        "accepts": ["Dry/Blue"],
+        "contact": "+91-9845012345",
+        "whatsapp": "+919845012345",
+        "capacity_kg_day": 500,
+        "operational_hours": "08:00-19:00",
+        "value_estimate_per_kg_inr": 7
+      },
+      "geometry": {"type": "Point", "coordinates": [77.6270, 13.0580]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "KAB-002",
+        "name": "Mohammed Kabadiwala",
+        "type": "Kabadiwala",
+        "accepts": ["Dry/Blue"],
+        "contact": "+91-9876543210",
+        "whatsapp": "+919876543210",
+        "capacity_kg_day": 400,
+        "operational_hours": "07:30-18:30",
+        "value_estimate_per_kg_inr": 6
+      },
+      "geometry": {"type": "Point", "coordinates": [77.6195, 13.0715]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "KAB-003",
+        "name": "Lakshmi Kabadiwala",
+        "type": "Kabadiwala",
+        "accepts": ["Dry/Blue"],
+        "contact": "+91-9741234567",
+        "whatsapp": "+919741234567",
+        "capacity_kg_day": 350,
+        "operational_hours": "09:00-18:00",
+        "value_estimate_per_kg_inr": 6.5
+      },
+      "geometry": {"type": "Point", "coordinates": [77.5985, 13.1012]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "REC-004",
+        "name": "SAAHAS Yelahanka",
+        "type": "Formal Recycler",
+        "accepts": ["Dry/Blue", "Hazardous/Black"],
+        "contact": "+91-80-2529-7641",
+        "whatsapp": "+918025297641",
+        "capacity_kg_day": 3000,
+        "operational_hours": "08:00-17:00"
+      },
+      "geometry": {"type": "Point", "coordinates": [77.6018, 13.1040]}
+    }
+  ]
+}

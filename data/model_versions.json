@@ -1,0 +1,10 @@
+[
+  {
+    "version": "v1.0.0",
+    "accuracy": 0.8,
+    "training_images": 1200,
+    "community_images_added": 0,
+    "trained_at": "2026-03-15T00:00:00",
+    "notes": "Initial GradientBoosting model \u2014 AUC 0.80"
+  }
+]

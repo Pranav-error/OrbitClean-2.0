@@ -1,0 +1,101 @@
+[
+  {
+    "dump_id": "DUMP-001",
+    "waste_type": "Mixed",
+    "alerts": [
+      {
+        "recycler_id": "KAB-001",
+        "recycler_name": "Raju Kabadiwala",
+        "distance_km": 0.34,
+        "alert_status": "mock_sent",
+        "value_inr": 34800,
+        "mass_kg": 8700,
+        "sent_at": "2026-03-21T00:53:50.256017"
+      },
+      {
+        "recycler_id": "REC-002",
+        "recycler_name": "BBMP DWCC Thanisandra",
+        "distance_km": 0.45,
+        "alert_status": "mock_sent",
+        "value_inr": 34800,
+        "mass_kg": 8700,
+        "sent_at": "2026-03-21T00:53:50.256038"
+      }
+    ],
+    "best_match": {
+      "recycler_id": "KAB-001",
+      "recycler_name": "Raju Kabadiwala",
+      "distance_km": 0.34,
+      "alert_status": "mock_sent",
+      "value_inr": 34800,
+      "mass_kg": 8700,
+      "sent_at": "2026-03-21T00:53:50.256017"
+    }
+  },
+  {
+    "dump_id": "DUMP-004",
+    "waste_type": "Dry Recyclable",
+    "alerts": [
+      {
+        "recycler_id": "REC-002",
+        "recycler_name": "BBMP DWCC Thanisandra",
+        "distance_km": 0.18,
+        "alert_status": "mock_sent",
+        "value_inr": 26040,
+        "mass_kg": 3720,
+        "sent_at": "2026-03-21T00:53:50.256455"
+      },
+      {
+        "recycler_id": "KAB-001",
+        "recycler_name": "Raju Kabadiwala",
+        "distance_km": 0.56,
+        "alert_status": "mock_sent",
+        "value_inr": 26040,
+        "mass_kg": 3720,
+        "sent_at": "2026-03-21T00:53:50.256464"
+      }
+    ],
+    "best_match": {
+      "recycler_id": "REC-002",
+      "recycler_name": "BBMP DWCC Thanisandra",
+      "distance_km": 0.18,
+      "alert_status": "mock_sent",
+      "value_inr": 26040,
+      "mass_kg": 3720,
+      "sent_at": "2026-03-21T00:53:50.256455"
+    }
+  },
+  {
+    "dump_id": "DUMP-006",
+    "waste_type": "Mixed Plastic",
+    "alerts": [
+      {
+        "recycler_id": "KAB-002",
+        "recycler_name": "Mohammed Kabadiwala",
+        "distance_km": 0.06,
+        "alert_status": "mock_sent",
+        "value_inr": 58740,
+        "mass_kg": 10680,
+        "sent_at": "2026-03-21T00:53:50.256764"
+      },
+      {
+        "recycler_id": "KAB-001",
+        "recycler_name": "Raju Kabadiwala",
+        "distance_km": 1.74,
+        "alert_status": "mock_sent",
+        "value_inr": 58740,
+        "mass_kg": 10680,
+        "sent_at": "2026-03-21T00:53:50.256772"
+      }
+    ],
+    "best_match": {
+      "recycler_id": "KAB-002",
+      "recycler_name": "Mohammed Kabadiwala",
+      "distance_km": 0.06,
+      "alert_status": "mock_sent",
+      "value_inr": 58740,
+      "mass_kg": 10680,
+      "sent_at": "2026-03-21T00:53:50.256764"
+    }
+  }
+]

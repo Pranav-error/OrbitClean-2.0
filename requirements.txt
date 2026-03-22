@@ -1,0 +1,48 @@
+# OrbitClean 2.0 — Python dependencies
+# Install: pip install -r requirements.txt
+
+# Core ML
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+
+# Satellite imagery processing
+rasterio>=1.3.0
+GDAL>=3.6.0         # may need: conda install -c conda-forge gdal
+geopandas>=0.14.0
+shapely>=2.0.0
+
+# OSM feature engineering
+osmnx>=1.7.0
+
+# Deep learning (YOLOv8)
+ultralytics>=8.0.0
+torch>=2.0.0
+Pillow>=10.0.0
+
+# Time-series forecasting
+prophet>=1.1.5
+
+# Anomaly detection (included in scikit-learn)
+# sklearn.ensemble.IsolationForest
+
+# KML export
+simplekml>=1.3.6
+
+# Backend
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# LLM interface
+anthropic>=0.28.0
+
+# WhatsApp alerts (optional)
+twilio>=9.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0

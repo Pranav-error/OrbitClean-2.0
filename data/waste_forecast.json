@@ -1,0 +1,378 @@
+[
+  {
+    "zone_id": "TH",
+    "zone_name": "Thanisandra",
+    "baseline_tpd": 42.5,
+    "forecast_generated_at": "2026-03-21T00:52:41.778959",
+    "forecast_days": 7,
+    "model": "ProphetFallback_WMA",
+    "forecast": [
+      {
+        "date": "2026-03-22",
+        "predicted_tpd": 61.62,
+        "lower_bound": 54.23,
+        "upper_bound": 69.01,
+        "day_of_week": "Sunday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 45.0
+      },
+      {
+        "date": "2026-03-23",
+        "predicted_tpd": 50.51,
+        "lower_bound": 44.45,
+        "upper_bound": 56.57,
+        "day_of_week": "Monday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Thanisandra",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 18.8
+      },
+      {
+        "date": "2026-03-24",
+        "predicted_tpd": 47.59,
+        "lower_bound": 41.88,
+        "upper_bound": 53.3,
+        "day_of_week": "Tuesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Thanisandra",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 12.0
+      },
+      {
+        "date": "2026-03-25",
+        "predicted_tpd": 50.3,
+        "lower_bound": 44.26,
+        "upper_bound": 56.33,
+        "day_of_week": "Wednesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Thanisandra",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 18.4
+      },
+      {
+        "date": "2026-03-26",
+        "predicted_tpd": 58.49,
+        "lower_bound": 51.47,
+        "upper_bound": 65.51,
+        "day_of_week": "Thursday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 37.6
+      },
+      {
+        "date": "2026-03-27",
+        "predicted_tpd": 63.68,
+        "lower_bound": 56.04,
+        "upper_bound": 71.32,
+        "day_of_week": "Friday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 49.8
+      },
+      {
+        "date": "2026-03-28",
+        "predicted_tpd": 64.94,
+        "lower_bound": 57.15,
+        "upper_bound": 72.73,
+        "day_of_week": "Saturday",
+        "festival": "Good Friday",
+        "surge": false,
+        "recommendation": "Pre-position 9 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 52.8
+      }
+    ]
+  },
+  {
+    "zone_id": "HB",
+    "zone_name": "Hebbal",
+    "baseline_tpd": 38.0,
+    "forecast_generated_at": "2026-03-21T00:52:41.779329",
+    "forecast_days": 7,
+    "model": "ProphetFallback_WMA",
+    "forecast": [
+      {
+        "date": "2026-03-22",
+        "predicted_tpd": 57.05,
+        "lower_bound": 50.2,
+        "upper_bound": 63.89,
+        "day_of_week": "Sunday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 50.1
+      },
+      {
+        "date": "2026-03-23",
+        "predicted_tpd": 47.49,
+        "lower_bound": 41.79,
+        "upper_bound": 53.19,
+        "day_of_week": "Monday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Hebbal",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 25.0
+      },
+      {
+        "date": "2026-03-24",
+        "predicted_tpd": 45.39,
+        "lower_bound": 39.94,
+        "upper_bound": 50.84,
+        "day_of_week": "Tuesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Hebbal",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 19.4
+      },
+      {
+        "date": "2026-03-25",
+        "predicted_tpd": 48.63,
+        "lower_bound": 42.79,
+        "upper_bound": 54.46,
+        "day_of_week": "Wednesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 7 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 28.0
+      },
+      {
+        "date": "2026-03-26",
+        "predicted_tpd": 57.28,
+        "lower_bound": 50.41,
+        "upper_bound": 64.16,
+        "day_of_week": "Thursday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 50.7
+      },
+      {
+        "date": "2026-03-27",
+        "predicted_tpd": 63.12,
+        "lower_bound": 55.55,
+        "upper_bound": 70.7,
+        "day_of_week": "Friday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 8 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 66.1
+      },
+      {
+        "date": "2026-03-28",
+        "predicted_tpd": 65.11,
+        "lower_bound": 57.29,
+        "upper_bound": 72.92,
+        "day_of_week": "Saturday",
+        "festival": "Good Friday",
+        "surge": false,
+        "recommendation": "Pre-position 9 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 71.3
+      }
+    ]
+  },
+  {
+    "zone_id": "YL",
+    "zone_name": "Yelahanka",
+    "baseline_tpd": 55.0,
+    "forecast_generated_at": "2026-03-21T00:52:41.779674",
+    "forecast_days": 7,
+    "model": "ProphetFallback_WMA",
+    "forecast": [
+      {
+        "date": "2026-03-22",
+        "predicted_tpd": 83.08,
+        "lower_bound": 73.11,
+        "upper_bound": 93.04,
+        "day_of_week": "Sunday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 11 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 51.1
+      },
+      {
+        "date": "2026-03-23",
+        "predicted_tpd": 71.19,
+        "lower_bound": 62.65,
+        "upper_bound": 79.73,
+        "day_of_week": "Monday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 9 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 29.4
+      },
+      {
+        "date": "2026-03-24",
+        "predicted_tpd": 69.85,
+        "lower_bound": 61.47,
+        "upper_bound": 78.23,
+        "day_of_week": "Tuesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 9 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 27.0
+      },
+      {
+        "date": "2026-03-25",
+        "predicted_tpd": 76.62,
+        "lower_bound": 67.42,
+        "upper_bound": 85.81,
+        "day_of_week": "Wednesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 10 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 39.3
+      },
+      {
+        "date": "2026-03-26",
+        "predicted_tpd": 92.21,
+        "lower_bound": 81.15,
+        "upper_bound": 103.28,
+        "day_of_week": "Thursday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 12 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 67.7
+      },
+      {
+        "date": "2026-03-27",
+        "predicted_tpd": 103.63,
+        "lower_bound": 91.19,
+        "upper_bound": 116.06,
+        "day_of_week": "Friday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 13 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 88.4
+      },
+      {
+        "date": "2026-03-28",
+        "predicted_tpd": 108.83,
+        "lower_bound": 95.77,
+        "upper_bound": 121.89,
+        "day_of_week": "Saturday",
+        "festival": "Good Friday",
+        "surge": false,
+        "recommendation": "Pre-position 14 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 97.9
+      }
+    ]
+  },
+  {
+    "zone_id": "KG",
+    "zone_name": "Kodigehalli",
+    "baseline_tpd": 29.5,
+    "forecast_generated_at": "2026-03-21T00:52:41.780011",
+    "forecast_days": 7,
+    "model": "ProphetFallback_WMA",
+    "forecast": [
+      {
+        "date": "2026-03-22",
+        "predicted_tpd": 44.61,
+        "lower_bound": 39.25,
+        "upper_bound": 49.96,
+        "day_of_week": "Sunday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 6 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 51.2
+      },
+      {
+        "date": "2026-03-23",
+        "predicted_tpd": 37.28,
+        "lower_bound": 32.81,
+        "upper_bound": 41.76,
+        "day_of_week": "Monday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 5 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 26.4
+      },
+      {
+        "date": "2026-03-24",
+        "predicted_tpd": 35.77,
+        "lower_bound": 31.48,
+        "upper_bound": 40.06,
+        "day_of_week": "Tuesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Increase collection frequency by 15% in Kodigehalli",
+        "urgency": "MEDIUM",
+        "pct_vs_baseline": 21.3
+      },
+      {
+        "date": "2026-03-25",
+        "predicted_tpd": 38.45,
+        "lower_bound": 33.84,
+        "upper_bound": 43.06,
+        "day_of_week": "Wednesday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 5 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 30.3
+      },
+      {
+        "date": "2026-03-26",
+        "predicted_tpd": 45.43,
+        "lower_bound": 39.98,
+        "upper_bound": 50.89,
+        "day_of_week": "Thursday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 6 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 54.0
+      },
+      {
+        "date": "2026-03-27",
+        "predicted_tpd": 50.21,
+        "lower_bound": 44.19,
+        "upper_bound": 56.24,
+        "day_of_week": "Friday",
+        "festival": null,
+        "surge": false,
+        "recommendation": "Pre-position 7 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 70.2
+      },
+      {
+        "date": "2026-03-28",
+        "predicted_tpd": 51.94,
+        "lower_bound": 45.7,
+        "upper_bound": 58.17,
+        "day_of_week": "Saturday",
+        "festival": "Good Friday",
+        "surge": false,
+        "recommendation": "Pre-position 7 extra vehicles. Alert BBMP ops team.",
+        "urgency": "HIGH",
+        "pct_vs_baseline": 76.1
+      }
+    ]
+  }
+]

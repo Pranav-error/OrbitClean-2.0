@@ -1,0 +1,435 @@
+{
+  "ward": {
+    "name": "Thanisandra",
+    "ward_id": 26,
+    "area_sqkm": 8.2,
+    "population": 52000,
+    "households": 13000,
+    "grid_cells": 552
+  },
+  "zones": [
+    {
+      "zone_id": "ZONE-A",
+      "zone_name": "Thanisandra Main Road (Central)",
+      "color": "#2563eb",
+      "depot": {
+        "lat": 13.0601,
+        "lon": 77.631,
+        "name": "BBMP DWCC Thanisandra"
+      },
+      "zone_center": {
+        "lat": 13.0585,
+        "lon": 77.6295
+      },
+      "zone_area_sqkm": 0.59,
+      "tippers_assigned": 4,
+      "tipper_capacity_kg": 500,
+      "wet_trips_per_day": 4,
+      "dry_trips_per_collection": 2,
+      "collection_frequency": "Daily (high waste area)",
+      "collection_freq_per_week": 7,
+      "route_length_km": 2.68,
+      "polyline": [
+        [
+          13.0601,
+          77.631
+        ],
+        [
+          13.061,
+          77.631
+        ],
+        [
+          13.06,
+          77.63
+        ],
+        [
+          13.06,
+          77.632
+        ],
+        [
+          13.059,
+          77.631
+        ],
+        [
+          13.061,
+          77.63
+        ],
+        [
+          13.059,
+          77.632
+        ],
+        [
+          13.06,
+          77.633
+        ],
+        [
+          13.061,
+          77.633
+        ],
+        [
+          13.055,
+          77.626
+        ],
+        [
+          13.055,
+          77.633
+        ],
+        [
+          13.062,
+          77.633
+        ],
+        [
+          13.062,
+          77.626
+        ],
+        [
+          13.0601,
+          77.631
+        ]
+      ],
+      "waste": {
+        "total_cells": 64,
+        "residential_cells": 28,
+        "market_cells": 10,
+        "high_risk_cells": 20,
+        "estimated_households": 1519,
+        "daily_waste_kg": 2674.5,
+        "daily_wet_kg": 1711.7,
+        "daily_dry_kg": 748.9,
+        "weekly_waste_kg": 18721.5
+      }
+    },
+    {
+      "zone_id": "ZONE-B",
+      "zone_name": "Kogilu Cross / North-West",
+      "color": "#10b981",
+      "depot": {
+        "lat": 13.0647,
+        "lon": 77.6218,
+        "name": "Collection Point Kogilu"
+      },
+      "zone_center": {
+        "lat": 13.065,
+        "lon": 77.623
+      },
+      "zone_area_sqkm": 1.45,
+      "tippers_assigned": 7,
+      "tipper_capacity_kg": 500,
+      "wet_trips_per_day": 7,
+      "dry_trips_per_collection": 3,
+      "collection_frequency": "Daily (high waste area)",
+      "collection_freq_per_week": 7,
+      "route_length_km": 4.22,
+      "polyline": [
+        [
+          13.0647,
+          77.6218
+        ],
+        [
+          13.059,
+          77.618
+        ],
+        [
+          13.059,
+          77.629
+        ],
+        [
+          13.07,
+          77.629
+        ],
+        [
+          13.07,
+          77.618
+        ],
+        [
+          13.0647,
+          77.6218
+        ]
+      ],
+      "waste": {
+        "total_cells": 128,
+        "residential_cells": 47,
+        "market_cells": 17,
+        "high_risk_cells": 0,
+        "estimated_households": 3002,
+        "daily_waste_kg": 5284.4,
+        "daily_wet_kg": 3382.0,
+        "daily_dry_kg": 1479.6,
+        "weekly_waste_kg": 36991.0
+      }
+    },
+    {
+      "zone_id": "ZONE-C",
+      "zone_name": "Bagalur Road / North-East",
+      "color": "#f59e0b",
+      "depot": {
+        "lat": 13.0669,
+        "lon": 77.6384,
+        "name": "Collection Point Bagalur Rd"
+      },
+      "zone_center": {
+        "lat": 13.065,
+        "lon": 77.636
+      },
+      "zone_area_sqkm": 1.45,
+      "tippers_assigned": 7,
+      "tipper_capacity_kg": 500,
+      "wet_trips_per_day": 7,
+      "dry_trips_per_collection": 3,
+      "collection_frequency": "Daily (high waste area)",
+      "collection_freq_per_week": 7,
+      "route_length_km": 4.22,
+      "polyline": [
+        [
+          13.0669,
+          77.6384
+        ],
+        [
+          13.061,
+          77.636
+        ],
+        [
+          13.06,
+          77.636
+        ],
+        [
+          13.059,
+          77.63
+        ],
+        [
+          13.059,
+          77.641
+        ],
+        [
+          13.07,
+          77.641
+        ],
+        [
+          13.07,
+          77.63
+        ],
+        [
+          13.0669,
+          77.6384
+        ]
+      ],
+      "waste": {
+        "total_cells": 128,
+        "residential_cells": 54,
+        "market_cells": 17,
+        "high_risk_cells": 2,
+        "estimated_households": 2964,
+        "daily_waste_kg": 5217.0,
+        "daily_wet_kg": 3338.9,
+        "daily_dry_kg": 1460.8,
+        "weekly_waste_kg": 36518.8
+      }
+    },
+    {
+      "zone_id": "ZONE-D",
+      "zone_name": "Rachenahalli / South-West",
+      "color": "#8b5cf6",
+      "depot": {
+        "lat": 13.0527,
+        "lon": 77.6234,
+        "name": "Collection Point Rachenahalli"
+      },
+      "zone_center": {
+        "lat": 13.052517,
+        "lon": 77.622948
+      },
+      "zone_area_sqkm": 1.32,
+      "tippers_assigned": 6,
+      "tipper_capacity_kg": 500,
+      "wet_trips_per_day": 6,
+      "dry_trips_per_collection": 3,
+      "collection_frequency": "Daily (high waste area)",
+      "collection_freq_per_week": 7,
+      "route_length_km": 4.02,
+      "polyline": [
+        [
+          13.0527,
+          77.6234
+        ],
+        [
+          13.054,
+          77.627
+        ],
+        [
+          13.053,
+          77.628
+        ],
+        [
+          13.048,
+          77.618
+        ],
+        [
+          13.048,
+          77.629
+        ],
+        [
+          13.058,
+          77.629
+        ],
+        [
+          13.058,
+          77.618
+        ],
+        [
+          13.0527,
+          77.6234
+        ]
+      ],
+      "waste": {
+        "total_cells": 116,
+        "residential_cells": 45,
+        "market_cells": 16,
+        "high_risk_cells": 2,
+        "estimated_households": 2531,
+        "daily_waste_kg": 4454.7,
+        "daily_wet_kg": 2851.0,
+        "daily_dry_kg": 1247.3,
+        "weekly_waste_kg": 31183.1
+      }
+    },
+    {
+      "zone_id": "ZONE-E",
+      "zone_name": "BEL Layout / South-East",
+      "color": "#ef4444",
+      "depot": {
+        "lat": 13.0529,
+        "lon": 77.6362,
+        "name": "Collection Point BEL Layout"
+      },
+      "zone_center": {
+        "lat": 13.052517,
+        "lon": 77.636052
+      },
+      "zone_area_sqkm": 1.32,
+      "tippers_assigned": 7,
+      "tipper_capacity_kg": 500,
+      "wet_trips_per_day": 7,
+      "dry_trips_per_collection": 3,
+      "collection_frequency": "Daily (high waste area)",
+      "collection_freq_per_week": 7,
+      "route_length_km": 4.02,
+      "polyline": [
+        [
+          13.0529,
+          77.6362
+        ],
+        [
+          13.053,
+          77.635
+        ],
+        [
+          13.056,
+          77.634
+        ],
+        [
+          13.053,
+          77.632
+        ],
+        [
+          13.057,
+          77.635
+        ],
+        [
+          13.051,
+          77.632
+        ],
+        [
+          13.053,
+          77.631
+        ],
+        [
+          13.053,
+          77.63
+        ],
+        [
+          13.048,
+          77.63
+        ],
+        [
+          13.048,
+          77.641
+        ],
+        [
+          13.058,
+          77.641
+        ],
+        [
+          13.058,
+          77.63
+        ],
+        [
+          13.0529,
+          77.6362
+        ]
+      ],
+      "waste": {
+        "total_cells": 116,
+        "residential_cells": 54,
+        "market_cells": 18,
+        "high_risk_cells": 7,
+        "estimated_households": 2982,
+        "daily_waste_kg": 5249.4,
+        "daily_wet_kg": 3359.6,
+        "daily_dry_kg": 1469.8,
+        "weekly_waste_kg": 36745.6
+      }
+    }
+  ],
+  "fleet_summary": {
+    "total_auto_tippers": 31,
+    "tipper_capacity_kg": 500,
+    "bbmp_rule": "1 tipper per 750 households",
+    "total_daily_waste_kg": 22880.0,
+    "total_daily_waste_tonnes": 22.88,
+    "waste_composition": {
+      "wet": 0.64,
+      "dry": 0.28,
+      "sanitary": 0.03,
+      "reject": 0.06
+    },
+    "wet_collection": "Daily (Green bin)",
+    "dry_collection": "Mon/Wed/Fri (Blue bin)",
+    "total_route_km_per_day": 19.16,
+    "depots": 5
+  },
+  "savings": {
+    "naive_total_km": 27.66,
+    "optimized_total_km": 19.16,
+    "distance_saved_km": 8.5,
+    "pct_distance_saved": 30.7,
+    "fuel_saved_litres": 2.12,
+    "co2_saved_kg": 5.68
+  },
+  "benchmarks": {
+    "seoul": {
+      "reduction_pct": 42,
+      "label": "Seoul Smart Collection"
+    },
+    "amsterdam": {
+      "reduction_pct": 30,
+      "label": "Amsterdam IoT Bins"
+    },
+    "barcelona": {
+      "reduction_pct": 20,
+      "label": "Barcelona Pneumatic"
+    },
+    "orbitclean": {
+      "reduction_pct": 30.7,
+      "label": "OrbitClean Thanisandra"
+    }
+  },
+  "bbmp_context": {
+    "citywide_tpd": 5700,
+    "processing_capacity_tpd": 2900,
+    "processing_utilised_tpd": 1150,
+    "underutilisation_pct": 60,
+    "penalty_range": "\u20b9200\u2013\u20b925,000 per violation",
+    "total_compactors_citywide": 531,
+    "total_auto_tippers_citywide": 4000
+  }
+}

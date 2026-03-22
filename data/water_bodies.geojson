@@ -1,0 +1,54 @@
+{
+  "type": "FeatureCollection",
+  "name": "water_bodies_bengaluru",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WB-001",
+        "name": "Hebbal Lake",
+        "type": "Lake",
+        "area_sqkm": 0.55,
+        "groundwater_recharge": true,
+        "population_at_risk": 12000,
+        "contamination_index": 0.74
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[77.5920,13.0480],[77.5960,13.0480],[77.5960,13.0510],[77.5920,13.0510],[77.5920,13.0480]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WB-002",
+        "name": "Thanisandra Storm Drain",
+        "type": "Drain",
+        "area_sqkm": 0.05,
+        "groundwater_recharge": false,
+        "population_at_risk": 3500,
+        "contamination_index": 0.82
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[77.6280,13.0540],[77.6295,13.0560],[77.6310,13.0580]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "WB-003",
+        "name": "Yelahanka Lake",
+        "type": "Lake",
+        "area_sqkm": 1.2,
+        "groundwater_recharge": true,
+        "population_at_risk": 25000,
+        "contamination_index": 0.31
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[77.5950,13.0980],[77.6010,13.0980],[77.6010,13.1050],[77.5950,13.1050],[77.5950,13.0980]]]
+      }
+    }
+  ]
+}

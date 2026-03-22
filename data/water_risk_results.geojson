@@ -1,0 +1,232 @@
+{
+  "type": "FeatureCollection",
+  "name": "thanisandra_dumps",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-001",
+        "name": "Thanisandra Main Road Dump",
+        "waste_type": "Mixed",
+        "swm_stream": "Dry/Blue",
+        "risk_score": 0.87,
+        "area_sqm": 145,
+        "volume_m3": 12.3,
+        "detected_date": "2026-03-18",
+        "status": "Active",
+        "recurrence_risk": 0.72,
+        "carbon_co2_eq_tonnes": 2.1,
+        "carbon_credit_inr": 4200,
+        "nearest_recycler": "SAAHAS 80ft Road",
+        "recycler_distance_km": 1.2,
+        "water_risk": "Low",
+        "cctv_coverage": false,
+        "ward": "Thanisandra",
+        "ward_id": 26,
+        "best_intervention": "Motion Sensor Light",
+        "intervention_cost_inr": 25000,
+        "roi_weeks": 6,
+        "contamination_radius_m": 24.1,
+        "max_contamination_index": 0.478,
+        "water_risk_level": "Medium",
+        "population_at_risk": 1673
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.62965,
+          13.056306
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-002",
+        "name": "Residential Colony Dump",
+        "waste_type": "Organic",
+        "swm_stream": "Wet/Green",
+        "risk_score": 0.74,
+        "area_sqm": 89,
+        "volume_m3": 7.8,
+        "detected_date": "2026-03-17",
+        "status": "Active",
+        "recurrence_risk": 0.65,
+        "carbon_co2_eq_tonnes": 1.4,
+        "carbon_credit_inr": 2800,
+        "nearest_recycler": "BBMP DWCC Thanisandra",
+        "recycler_distance_km": 0.8,
+        "water_risk": "Medium",
+        "cctv_coverage": false,
+        "ward": "Thanisandra",
+        "ward_id": 26,
+        "best_intervention": "Community Bin Installation",
+        "intervention_cost_inr": 80000,
+        "roi_weeks": 9,
+        "contamination_radius_m": 18.9,
+        "max_contamination_index": 0,
+        "water_risk_level": "Low",
+        "population_at_risk": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.629216,
+          13.056467
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-003",
+        "name": "Market Area Dump (Hebbal)",
+        "waste_type": "Hazardous",
+        "swm_stream": "Hazardous/Black",
+        "risk_score": 0.93,
+        "area_sqm": 210,
+        "volume_m3": 18.5,
+        "detected_date": "2026-03-19",
+        "status": "Active",
+        "recurrence_risk": 0.81,
+        "carbon_co2_eq_tonnes": 3.8,
+        "carbon_credit_inr": 7600,
+        "nearest_recycler": "Hasiru Dala Hebbal",
+        "recycler_distance_km": 2.1,
+        "water_risk": "High",
+        "cctv_coverage": false,
+        "ward": "Hebbal",
+        "ward_id": 4,
+        "best_intervention": "Solar IoT Camera",
+        "intervention_cost_inr": 60000,
+        "roi_weeks": 4,
+        "contamination_radius_m": 29.0,
+        "max_contamination_index": 0,
+        "water_risk_level": "Low",
+        "population_at_risk": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.59768,
+          13.051234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-004",
+        "name": "Road Junction Dump",
+        "waste_type": "Dry Recyclable",
+        "swm_stream": "Dry/Blue",
+        "risk_score": 0.68,
+        "area_sqm": 62,
+        "volume_m3": 5.2,
+        "detected_date": "2026-03-16",
+        "status": "Resolved",
+        "recurrence_risk": 0.58,
+        "carbon_co2_eq_tonnes": 0.9,
+        "carbon_credit_inr": 1800,
+        "nearest_recycler": "Kabadiwala Network",
+        "recycler_distance_km": 0.5,
+        "water_risk": "Low",
+        "cctv_coverage": true,
+        "ward": "Thanisandra",
+        "ward_id": 26,
+        "best_intervention": "No Dumping Signage",
+        "intervention_cost_inr": 5000,
+        "roi_weeks": 3,
+        "contamination_radius_m": 7.9,
+        "max_contamination_index": 0,
+        "water_risk_level": "Low",
+        "population_at_risk": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6321,
+          13.0589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-005",
+        "name": "Vacant Plot Dump (Yelahanka)",
+        "waste_type": "Construction Debris",
+        "swm_stream": "Dry/Blue",
+        "risk_score": 0.79,
+        "area_sqm": 320,
+        "volume_m3": 28.0,
+        "detected_date": "2026-03-20",
+        "status": "Active",
+        "recurrence_risk": 0.77,
+        "carbon_co2_eq_tonnes": 5.1,
+        "carbon_credit_inr": 10200,
+        "nearest_recycler": "SAAHAS Yelahanka",
+        "recycler_distance_km": 3.4,
+        "water_risk": "Low",
+        "cctv_coverage": false,
+        "ward": "Yelahanka",
+        "ward_id": 3,
+        "best_intervention": "Solar IoT Camera",
+        "intervention_cost_inr": 60000,
+        "roi_weeks": 5,
+        "contamination_radius_m": 17.9,
+        "max_contamination_index": 0,
+        "water_risk_level": "Low",
+        "population_at_risk": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.5985,
+          13.1012
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "DUMP-006",
+        "name": "Storm Drain Adjacent Dump",
+        "waste_type": "Mixed Plastic",
+        "swm_stream": "Dry/Blue",
+        "risk_score": 0.85,
+        "area_sqm": 178,
+        "volume_m3": 15.6,
+        "detected_date": "2026-03-19",
+        "status": "Active",
+        "recurrence_risk": 0.69,
+        "carbon_co2_eq_tonnes": 2.8,
+        "carbon_credit_inr": 5600,
+        "nearest_recycler": "BBMP DWCC Kodigehalli",
+        "recycler_distance_km": 1.7,
+        "water_risk": "High",
+        "cctv_coverage": false,
+        "ward": "Kodigehalli",
+        "ward_id": 6,
+        "best_intervention": "Motion Sensor Light",
+        "intervention_cost_inr": 25000,
+        "roi_weeks": 5,
+        "contamination_radius_m": 26.7,
+        "max_contamination_index": 0,
+        "water_risk_level": "Low",
+        "population_at_risk": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6189,
+          13.0715
+        ]
+      }
+    }
+  ],
+  "water_risk_summary": {
+    "total_population_at_risk": 1673,
+    "analysis_date": "2026-03-21T00:52:29.838378"
+  }
+}

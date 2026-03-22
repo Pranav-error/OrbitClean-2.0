@@ -1,0 +1,185 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-001",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 400,
+        "probability": 0.671,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.055
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.627833,
+          13.054768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-002",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 100,
+        "probability": 0.708,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.168
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.632508,
+          13.054768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-003",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 100,
+        "probability": 0.669,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.137
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.633065,
+          13.054768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-004",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 200,
+        "probability": 0.747,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.165
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.627771,
+          13.054929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-005",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 1200,
+        "probability": 0.79,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.097
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.633065,
+          13.054951
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-006",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 100,
+        "probability": 0.654,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.144
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.627678,
+          13.055036
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-007",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 100,
+        "probability": 0.681,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": -0.005
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.620867,
+          13.055089
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-008",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 300,
+        "probability": 0.736,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.016
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.621011,
+          13.055125
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RGB-DUMP-009",
+        "detection_method": "RF_rgb_texture",
+        "detected_date": "2026-03-22",
+        "area_sqm": 200,
+        "probability": 0.758,
+        "status": "Active",
+        "entropy_mean": 0.0,
+        "rgb_ratio_mean": 0.087
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.627771,
+          13.055089
+        ]
+      }
+    }
+  ]
+}
