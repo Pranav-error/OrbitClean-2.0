@@ -9,6 +9,15 @@ interface Props {
   riskGrid: RiskCell[];
   fieldReports: FieldReport[];
   selectedDump: DumpSite | null;
+  inspectedPoint?: {
+    lat: number;
+    lon: number;
+    found: boolean;
+    nearestDump?: DumpSite | null;
+    nearestRiskCell?: RiskCell | null;
+    dumpDistanceMeters?: number | null;
+    riskDistanceMeters?: number | null;
+  } | null;
   showHeatmap: boolean;
   showRecyclers: boolean;
   showWater: boolean;
@@ -26,6 +35,37 @@ const STREAM_DOTS: Record<string, string> = {
   "Sanitary/Red": "#ef4444", "Hazardous/Black": "#374151",
 };
 
+function computeBounds(props: Props) {
+  const points: Array<{ lat: number; lon: number }> = [];
+
+  props.dumps.forEach((dump) => points.push({ lat: dump.lat, lon: dump.lon }));
+  props.riskGrid.forEach((cell) => points.push({ lat: cell.lat, lon: cell.lon }));
+
+  if (points.length === 0) {
+    return {
+      minLat: 13.048,
+      maxLat: 13.070,
+      minLon: 77.618,
+      maxLon: 77.641,
+    };
+  }
+
+  const minLat = Math.min(...points.map((p) => p.lat));
+  const maxLat = Math.max(...points.map((p) => p.lat));
+  const minLon = Math.min(...points.map((p) => p.lon));
+  const maxLon = Math.max(...points.map((p) => p.lon));
+
+  const latPad = Math.max((maxLat - minLat) * 0.12, 0.001);
+  const lonPad = Math.max((maxLon - minLon) * 0.12, 0.001);
+
+  return {
+    minLat: minLat - latPad,
+    maxLat: maxLat + latPad,
+    minLon: minLon - lonPad,
+    maxLon: maxLon + lonPad,
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LeafletMap = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,9 +79,11 @@ export default function MapView(props: Props) {
   const layers = useRef<Record<string, LeafletLayer | null>>({
     heatmap: null, dumps: null, routes: null,
     field: null, community: null, cleaned: null,
+    inspect: null,
   });
   const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
+  const bounds = computeBounds(props);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -83,12 +125,24 @@ export default function MapView(props: Props) {
         const dist = Math.sqrt((c.lat - cs.lat) ** 2 + (c.lon - cs.lon) ** 2) * 111000;
         if (dist < 200) { score = Math.max(score - cs.risk_reduction, 0.05); break; }
       }
-      if (score < 0.65) return;
+      if (score < 0.5) return;
       const color = RISK_COLOR(score);
-      const t = Math.min((score - 0.65) / 0.35, 1);
-      L.circleMarker([c.lat, c.lon], { radius: 12 + t * 8, fillColor: color, color: "transparent", weight: 0, fillOpacity: 0.12 + t * 0.15 }).addTo(g);
-      L.circleMarker([c.lat, c.lon], { radius: 4 + t * 3, fillColor: color, color: "white", weight: 0.5, fillOpacity: 0.5 + t * 0.3 })
-        .bindTooltip(`<div style="font-size:11px;font-weight:600;color:${color}">Risk ${(score * 100).toFixed(0)}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">ML-predicted</div>`).addTo(g);
+      const t = Math.min((score - 0.5) / 0.5, 1);
+      L.circleMarker([c.lat, c.lon], { radius: 18 + t * 12, fillColor: color, color, weight: 1, opacity: 0.22, fillOpacity: 0.14 + t * 0.12 }).addTo(g);
+      L.circleMarker([c.lat, c.lon], { radius: 6 + t * 5, fillColor: color, color: "white", weight: 2, fillOpacity: 0.78 + t * 0.12 })
+        .bindTooltip(
+          `<div style="font-size:11px;min-width:170px">
+            <div style="font-weight:700;color:${color}">${c.id || "Predicted dump hotspot"} · ${(score * 100).toFixed(0)}%</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:2px">Sentinel-2 + urban risk model</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:5px">
+              <div style="background:#f8fafc;padding:3px 5px;border-radius:4px"><span style="font-size:8px;color:#94a3b8">LAND</span><br/><b style="font-size:10px;color:#334155">${c.land_use || "Unknown"}</b></div>
+              <div style="background:#f8fafc;padding:3px 5px;border-radius:4px"><span style="font-size:8px;color:#94a3b8">ROAD</span><br/><b style="font-size:10px;color:#334155">${Math.round(c.dist_road_m || 0)}m</b></div>
+              <div style="background:#f8fafc;padding:3px 5px;border-radius:4px"><span style="font-size:8px;color:#94a3b8">COLL.</span><br/><b style="font-size:10px;color:#334155">${Math.round(c.dist_collection_m || 0)}m</b></div>
+              <div style="background:#f8fafc;padding:3px 5px;border-radius:4px"><span style="font-size:8px;color:#94a3b8">HIST.</span><br/><b style="font-size:10px;color:#334155">${c.hist_dump_density || 0}</b></div>
+            </div>
+          </div>`,
+          { direction: "top", offset: [0, -8], sticky: true }
+        ).addTo(g);
     });
     g.addTo(map);
     layers.current.heatmap = g;
@@ -223,6 +277,61 @@ export default function MapView(props: Props) {
     mapRef.current.flyTo([props.selectedDump.lat, props.selectedDump.lon], 17, { duration: 0.8 });
   }, [props.selectedDump]);
 
+  // ── Fly to inspected coordinate and mark the lookup point ──
+  useEffect(() => {
+    if (!ready || !mapRef.current || !LRef.current) return;
+    const L = LRef.current; const map = mapRef.current;
+    layers.current.inspect?.removeFrom(map);
+    layers.current.inspect = null;
+
+    if (!props.inspectedPoint) return;
+
+    const g = L.layerGroup();
+    const { lat, lon, found, nearestDump, nearestRiskCell, dumpDistanceMeters, riskDistanceMeters } = props.inspectedPoint;
+
+    L.circleMarker([lat, lon], {
+      radius: 10,
+      fillColor: found ? "#2563eb" : "#64748b",
+      color: "#ffffff",
+      weight: 2,
+      fillOpacity: 0.95,
+    }).bindTooltip(
+      `<div style="font-size:11px;min-width:160px">
+        <div style="font-weight:700;color:${found ? "#2563eb" : "#7c3aed"}">Checked coordinate</div>
+        <div style="font-size:10px;color:#64748b;margin-top:2px">${lat.toFixed(6)}, ${lon.toFixed(6)}</div>
+        ${nearestRiskCell ? `<div style="margin-top:4px;font-size:10px">Nearest hotspot: <b>${nearestRiskCell.id || "Risk cell"}</b> · ${Math.round(nearestRiskCell.score * 100)}%</div>` : ""}
+        ${typeof riskDistanceMeters === "number" ? `<div style="font-size:10px;color:#64748b">Hotspot distance: ${Math.round(riskDistanceMeters)} m</div>` : ""}
+        ${nearestDump ? `<div style="margin-top:4px;font-size:10px">Nearest confirmed dump: <b>${nearestDump.id}</b></div>` : ""}
+        ${typeof dumpDistanceMeters === "number" ? `<div style="font-size:10px;color:#64748b">Confirmed distance: ${Math.round(dumpDistanceMeters)} m</div>` : ""}
+      </div>`,
+      { sticky: true }
+    ).addTo(g);
+
+    if (nearestRiskCell) {
+      L.circleMarker([nearestRiskCell.lat, nearestRiskCell.lon], {
+        radius: 14,
+        fillColor: RISK_COLOR(nearestRiskCell.score),
+        color: "#ffffff",
+        weight: 2,
+        fillOpacity: 0.22,
+      }).addTo(g);
+    }
+
+    if (nearestDump) {
+      L.circleMarker([nearestDump.lat, nearestDump.lon], {
+        radius: 12,
+        fillColor: found ? "#10b981" : "#ef4444",
+        color: "#ffffff",
+        weight: 2,
+        fillOpacity: 0.18,
+      }).addTo(g);
+    }
+
+    g.addTo(map);
+    layers.current.inspect = g;
+    map.flyTo([lat, lon], nearestRiskCell || nearestDump ? 17 : 16, { duration: 0.8 });
+  }, [ready, props.inspectedPoint]);
+
   function buildPopup(dump: DumpSite): string {
     const rc = RISK_COLOR(dump.risk_score);
     const sc = STREAM_DOTS[dump.swm_stream] ?? "#64748b";
@@ -254,5 +363,38 @@ export default function MapView(props: Props) {
   }
 
   if (!mounted) return null;
-  return <div ref={containerRef} className="w-full h-full" />;
+  return (
+    <div className="relative w-full h-full">
+      <div ref={containerRef} className="w-full h-full" />
+      <div className="absolute inset-0 z-[320] pointer-events-none">
+        {props.dumps.map((dump) => {
+          const left = ((dump.lon - bounds.minLon) / (bounds.maxLon - bounds.minLon)) * 100;
+          const top = ((bounds.maxLat - dump.lat) / (bounds.maxLat - bounds.minLat)) * 100;
+          const color = RISK_COLOR(dump.risk_score);
+          return (
+            <div
+              key={`fallback-${dump.id}`}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${left}%`, top: `${top}%` }}
+            >
+              <div
+                className="flex items-center gap-2 px-2 py-1 rounded-full shadow-md border bg-white/95"
+                style={{ borderColor: `${color}40` }}
+              >
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+                <span className="text-[10px] font-semibold text-[#0f172a] whitespace-nowrap">{dump.name}</span>
+                <span className="text-[9px] font-bold" style={{ color }}>{Math.round(dump.risk_score * 100)}%</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {!ready && (
+        <div className="absolute top-3 left-3 z-[380] px-3 py-1.5 rounded-lg bg-white/90 border border-[#e2e8f0] text-[10px] text-[#64748b] shadow-sm">
+          Loading map...
+        </div>
+      )}
+    </div>
+  );
 }
+

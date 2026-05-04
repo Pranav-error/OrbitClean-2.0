@@ -26,7 +26,7 @@
   --tx2: #334155;
   --mu: #64748b;
   --mu2: #94a3b8;
-  --sidebar-w: 380px;
+  --sidebar-w: 400px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,13 +52,14 @@ html, body {
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
   transition: box-shadow 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
 }
 
 .card-header {
@@ -67,7 +68,7 @@ html, body {
   justify-content: space-between;
   padding: 10px 14px;
   border-bottom: 1px solid var(--border-light);
-  background: #fafbfc;
+  background: #ffffff;
 }
 
 .card-title {
@@ -95,6 +96,37 @@ html, body {
 .badge-yellow { background: #fffbeb; color: #d97706; }
 .badge-purple { background: #f5f3ff; color: #7c3aed; }
 
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.status-pill-green {
+  color: #047857;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+}
+
+.status-pill-amber {
+  color: #b45309;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
 /* ── Sidebar tabs ── */
 .sidebar-tabs {
   display: flex;
@@ -107,9 +139,9 @@ html, body {
 
 .sidebar-tab {
   flex: 1;
-  padding: 10px 4px;
-  font-size: 11px;
-  font-weight: 500;
+  padding: 12px 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--mu);
   text-align: center;
   cursor: pointer;
@@ -127,9 +159,9 @@ html, body {
 }
 
 .sidebar-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-  font-weight: 600;
+  color: #0f172a;
+  border-bottom-color: #0f172a;
+  font-weight: 700;
 }
 
 /* ── Section spacing in sidebar ── */

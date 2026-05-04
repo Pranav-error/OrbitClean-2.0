@@ -40,6 +40,17 @@ export default function TruckSimulation({onStats}:{onStats?:(s:TruckStats)=>void
   const animR=useRef<ReturnType<typeof setInterval>|null>(null);
   const idxR=useRef(0),vis=useRef<Set<string>>(new Set()),sR=useRef(INIT),tR=useRef(360);
 
+  const buildFallbackPath = useCallback(() => {
+    const fb:[number,number][]=[];
+    for(let i=0;i<STOPS.length-1;i++){
+      const a=STOPS[i],b=STOPS[i+1];
+      for(let j=0;j<=10;j++){
+        fb.push([a.lat+(b.lat-a.lat)*j/10,a.lon+(b.lon-a.lon)*j/10]);
+      }
+    }
+    return fb;
+  }, []);
+
   useEffect(()=>setMounted(true),[]);
 
   useEffect(()=>{
@@ -62,10 +73,27 @@ export default function TruckSimulation({onStats}:{onStats?:(s:TruckStats)=>void
   useEffect(()=>{
     if(!mounted)return;
     const c=STOPS.map(s=>`${s.lon},${s.lat}`).join(";");
-    fetch(`https://router.project-osrm.org/route/v1/driving/${c}?overview=full&geometries=geojson`,{signal:AbortSignal.timeout(9000)})
-      .then(r=>r.json()).then(d=>{setPts(d.routes[0].geometry.coordinates.map(([lo,la]:[number,number])=>[la,lo] as [number,number]));setOsrm("ok");})
-      .catch(()=>{const fb:[number,number][]=[];for(let i=0;i<STOPS.length-1;i++){const a=STOPS[i],b=STOPS[i+1];for(let j=0;j<=10;j++)fb.push([a.lat+(b.lat-a.lat)*j/10,a.lon+(b.lon-a.lon)*j/10]);}setPts(fb);setOsrm("fail");});
-  },[mounted]);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000);
+    fetch(`https://router.project-osrm.org/route/v1/driving/${c}?overview=full&geometries=geojson`,{signal:controller.signal})
+      .then(r=>r.json())
+      .then(d=>{
+        const coords = d?.routes?.[0]?.geometry?.coordinates;
+        if(!Array.isArray(coords) || coords.length===0) throw new Error("Invalid OSRM response");
+        setPts(coords.map(([lo,la]:[number,number])=>[la,lo] as [number,number]));
+        setOsrm("ok");
+      })
+      .catch(()=>{
+        setPts(buildFallbackPath());
+        setOsrm("fail");
+      })
+      .finally(()=>clearTimeout(timeoutId));
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  },[mounted, buildFallbackPath]);
 
   useEffect(()=>{
     if(!mapR.current||pts.length===0||!L_.current)return;

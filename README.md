@@ -580,6 +580,99 @@ python ml/water_risk.py --demo
 python ml/deterrence_roi.py --demo
 ```
 
+### 3.1 Live-Style Daily Refresh (recommended)
+
+Use a single command to refresh dump detections and risk grid outputs:
+
+```bash
+python ml/live_refresh.py --mode demo
+```
+
+For real day-to-day change detection with two Sentinel dates:
+
+```bash
+python ml/live_refresh.py --mode multispectral --date1 data/s2_prev.tif --date2 data/s2_latest.tif
+```
+
+For single-image RGB mode:
+
+```bash
+python ml/live_refresh.py --mode rgb --rgb data/latest_rgb.tif
+```
+
+**Automatic Sentinel-2 Fetching & Rotation** (FULL AUTOMATION):
+
+Instead of manually providing satellite files, use the `--auto-fetch` flag to automatically fetch the latest Sentinel-2 L2A scene from Planetary Computer STAC, preprocess it to 6-band stack, and rotate files for multispectral comparison:
+
+```bash
+# Fetch latest Sentinel-2 for Thanisandra, auto-rotate, run multispectral detection
+python ml/live_refresh.py --auto-fetch --mode multispectral --max-cloud 20
+```
+
+Options:
+- `--auto-fetch`: Enable automatic Sentinel-2 download + preprocessing + file rotation
+- `--max-cloud NNN`: Maximum cloud cover % to accept (default 20)
+- `--days-lookback NNN`: Number of days to search backward for scenes (default 30)
+- `--bbox "minx,miny,maxx,maxy"`: AOI bounding box (default: Thanisandra 77.5,13.0,77.6,13.1)
+- `--allow-demo-fallback`: Optional; only use this for demos. Without it, the live run fails if Sentinel-2 cannot be fetched.
+
+What happens automatically:
+1. Queries Planetary Computer STAC for all Sentinel-2 L2A scenes in the lookback window
+2. Filters by cloud cover (default < 20%)
+3. Downloads the AOI window for 6 bands (B2, B3, B4, B5, B11, B12)
+4. Stacks to single 6-band GeoTIFF at 10 m resolution
+5. Preserves old current as `s2_prev.tif`, then promotes the new scene to `s2_curr.tif`
+6. Runs multispectral change detection on prev/current pair
+7. Writes fetch metadata to `data/s2_fetch_metadata.json` and pipeline metadata to `data/live_pipeline_status.json`
+
+Live mode is strict by default: it fails if Sentinel-2 cannot be fetched instead of silently copying bundled demo imagery. Use `--allow-demo-fallback` only when you intentionally want demo behavior.
+
+No API key required — uses free Planetary Computer STAC endpoint.
+
+**Output files after auto-fetch:**
+- `data/s2_curr.tif` — Latest downloaded Sentinel-2 6-band stack
+- `data/s2_prev.tif` — Previous scene (rotated after fetch)
+- `data/detected_dumps.geojson` — Updated dump detections (multispectral change detection)
+- `data/risk_grid_predicted.geojson` — Updated risk grid
+- `data/live_pipeline_status.json` — Fetch + ML metadata (scene ID, cloud cover, timestamps, step exit codes)
+- `data/s2_fetch_metadata.json` - Sentinel scene ID, acquisition timestamp, cloud cover, and fetch status
+
+```bash
+GET /api/pipeline/status
+```
+
+### 3.2 Windows Task Scheduler (daily at 06:00)
+
+**Manual multispectral mode** (requires pre-provided satellite files):
+
+```powershell
+schtasks /Create /TN "OrbitClean Daily Refresh" /SC DAILY /ST 06:00 /TR "D:\OrbitClean-2.0\venv\Scripts\python.exe D:\OrbitClean-2.0\ml\live_refresh.py --mode multispectral --date1 data/s2_prev.tif --date2 data/s2_curr.tif" /F
+```
+
+**Fully automatic with Sentinel-2 fetching** (RECOMMENDED):
+
+```powershell
+schtasks /Create /TN "OrbitClean Daily Refresh" /SC DAILY /ST 06:00 /TR "D:\OrbitClean-2.0\venv\Scripts\python.exe D:\OrbitClean-2.0\ml\live_refresh.py --auto-fetch --mode multispectral --max-cloud 20" /F
+```
+
+Run once immediately:
+
+```powershell
+schtasks /Run /TN "OrbitClean Daily Refresh"
+```
+
+Query task status:
+
+```powershell
+schtasks /Query /TN "OrbitClean Daily Refresh" /V /FO LIST
+```
+
+After task executes, check results:
+
+```powershell
+Get-Content data/live_pipeline_status.json | ConvertFrom-Json | Format-Table
+```
+
 ### 4. Environment Variables (optional features)
 
 ```bash

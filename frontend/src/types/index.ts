@@ -168,9 +168,53 @@ export interface Recycler {
 }
 
 export interface RiskCell {
+  id?: string;
   lat: number;
   lon: number;
   score: number;
+  risk_level?: string;
+  ward?: string;
+  land_use?: string;
+  dist_road_m?: number;
+  dist_collection_m?: number;
+  hist_dump_density?: number;
+  generated_at?: string;
+  source?: string;
+}
+
+export interface SatelliteSceneMetadata {
+  id?: string;
+  datetime?: string;
+  cloud_cover?: number;
+}
+
+export interface PipelineStatus {
+  refresh?: {
+    status?: string;
+    mode?: string;
+    auto_fetch?: boolean;
+    started_at?: string;
+    finished_at?: string;
+    steps?: Array<{
+      name?: string;
+      exit_code?: number;
+      stdout_tail?: string;
+      stderr_tail?: string;
+    }>;
+    outputs?: Record<string, { exists?: boolean; modified_at?: string; size_bytes?: number; path?: string }>;
+  } | null;
+  sentinel?: {
+    status?: string;
+    mode?: string;
+    scenes_found?: number;
+    scene_selected?: SatelliteSceneMetadata | null;
+    bands_downloaded?: number;
+    output_file?: string;
+    prev_file?: string;
+    error?: string | null;
+  } | null;
+  outputs?: Record<string, { exists?: boolean; modified_at?: string; size_bytes?: number; path?: string }>;
+  queried_at?: string;
 }
 
 export interface WasteDetection {

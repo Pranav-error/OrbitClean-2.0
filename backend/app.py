@@ -59,6 +59,19 @@ def load_json(filename):
     return None
 
 
+def file_meta(filename):
+    path = os.path.join(DATA_DIR, filename)
+    if not os.path.exists(path):
+        return {"filename": filename, "exists": False}
+    stat = os.stat(path)
+    return {
+        "filename": filename,
+        "exists": True,
+        "size_bytes": stat.st_size,
+        "modified_at": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+    }
+
+
 # ── App setup ──────────────────────────────────────────────────────────────
 
 if HAS_FASTAPI:
@@ -125,7 +138,7 @@ if HAS_FASTAPI:
              summary="Get all active illegal dump sites")
     async def get_active_dumps():
         """Returns GeoJSON of all currently active detected illegal dump sites."""
-        gj = load_json("thanisandra_dumps.geojson")
+        gj = load_json("detected_dumps.geojson")
         if not gj:
             raise HTTPException(404, "Dump data not found")
         active = [f for f in gj['features'] if f['properties'].get('status') == 'Active']
@@ -134,7 +147,7 @@ if HAS_FASTAPI:
     @app.get("/api/dumps/{dump_id}", tags=["Dump Sites"],
              summary="Get details for a specific dump site")
     async def get_dump(dump_id: str):
-        gj = load_json("thanisandra_dumps.geojson")
+        gj = load_json("detected_dumps.geojson")
         if not gj:
             raise HTTPException(404, "Dump data not found")
         dump = next((f for f in gj['features']
@@ -146,7 +159,7 @@ if HAS_FASTAPI:
     @app.get("/api/dumps/{dump_id}/carbon", tags=["Dump Sites"],
              summary="Get carbon credit estimate for a dump site")
     async def get_carbon(dump_id: str):
-        gj = load_json("thanisandra_dumps.geojson")
+        gj = load_json("detected_dumps.geojson")
         if not gj:
             raise HTTPException(404, "Data not found")
         dump = next((f for f in gj['features']
@@ -159,7 +172,7 @@ if HAS_FASTAPI:
     @app.get("/api/dumps/{dump_id}/roi", tags=["Dump Sites"],
              summary="Get deterrence ROI analysis for a dump site")
     async def get_roi(dump_id: str):
-        gj = load_json("thanisandra_dumps.geojson")
+        gj = load_json("detected_dumps.geojson")
         if not gj:
             raise HTTPException(404, "Data not found")
         dump = next((f for f in gj['features']
@@ -171,7 +184,7 @@ if HAS_FASTAPI:
     @app.get("/api/dumps/{dump_id}/water-risk", tags=["Dump Sites"],
              summary="Get water contamination risk for a dump site")
     async def get_water_risk(dump_id: str):
-        gj    = load_json("thanisandra_dumps.geojson")
+        gj    = load_json("detected_dumps.geojson")
         water = load_json("water_bodies.geojson")
         if not gj:
             raise HTTPException(404, "Data not found")
@@ -214,7 +227,7 @@ if HAS_FASTAPI:
         min_score: float = Query(0.0, description="Minimum risk score filter"),
         ward: Optional[str] = Query(None, description="Filter by ward name"),
     ):
-        gj = load_json("risk_grid.geojson")
+        gj = load_json("risk_grid_predicted.geojson")
         if not gj:
             raise HTTPException(404, "Risk grid not found. Run ml/risk_predictor.py first.")
         features = gj['features']
@@ -239,7 +252,7 @@ if HAS_FASTAPI:
         if not ward:
             raise HTTPException(404, f"Ward {ward_id} not found")
 
-        gj = load_json("thanisandra_dumps.geojson") or {"features": []}
+        gj = load_json("detected_dumps.geojson") or {"features": []}
         ward_dumps = [f for f in gj['features']
                       if f['properties'].get('ward_id') == ward_id]
 
@@ -308,7 +321,7 @@ if HAS_FASTAPI:
     @app.get("/api/volume/summary", tags=["Volume Estimation"],
              summary="Get waste weight estimates for all active dumps + trucks needed")
     async def get_volume_summary():
-        gj = load_json("thanisandra_dumps.geojson")
+        gj = load_json("detected_dumps.geojson")
         if not gj:
             raise HTTPException(404, "Dump data not found")
         active = [f for f in gj['features'] if f['properties'].get('status') == 'Active']
@@ -345,7 +358,7 @@ if HAS_FASTAPI:
     ):
         image_data = await file.read()
         classification = classify_image_mock(image_data, filename=file.filename)
-        gj = load_json("thanisandra_dumps.geojson") or {"features": []}
+        gj = load_json("detected_dumps.geojson") or {"features": []}
         active = [f for f in gj['features'] if f['properties'].get('status') == 'Active']
         dumps_flat = []
         for f in active:
@@ -369,7 +382,7 @@ if HAS_FASTAPI:
     @app.get("/api/community/verification", tags=["Community Validation"],
              summary="Get community verification status for all dumps")
     async def get_community_verification():
-        gj = load_json("thanisandra_dumps.geojson") or {"features": []}
+        gj = load_json("detected_dumps.geojson") or {"features": []}
         active = [f for f in gj['features'] if f['properties'].get('status') == 'Active']
         dumps_flat = []
         for f in active:
@@ -384,6 +397,24 @@ if HAS_FASTAPI:
              summary="Get model version history, accuracy trend, retrain readiness")
     async def get_retrain_status():
         return retrain_status()
+
+    @app.get("/api/pipeline/status", tags=["Pipeline"],
+             summary="Get latest model refresh status and output timestamps")
+    async def get_pipeline_status():
+        status = load_json("live_pipeline_status.json")
+        sentinel = load_json("s2_fetch_metadata.json")
+        return {
+            "refresh": status,
+            "sentinel": sentinel,
+            "outputs": {
+                "detected_dumps": file_meta("detected_dumps.geojson"),
+                "risk_grid": file_meta("risk_grid_predicted.geojson"),
+                "s2_prev": file_meta("s2_prev.tif"),
+                "s2_curr": file_meta("s2_curr.tif"),
+                "s2_metadata": file_meta("s2_fetch_metadata.json"),
+            },
+            "queried_at": datetime.now().isoformat(),
+        }
 
     @app.post("/api/retrain/trigger", tags=["Auto-Retrain"],
               summary="Trigger model retraining if threshold met")
@@ -402,7 +433,7 @@ if HAS_FASTAPI:
     @app.post("/api/cleanup/generate", tags=["Cleanup Tracker"],
               summary="Generate cleanup missions from active dumps + critical risk cells")
     async def generate_cleanup_missions():
-        gj = load_json("thanisandra_dumps.geojson") or {"features": []}
+        gj = load_json("detected_dumps.geojson") or {"features": []}
         active = [f for f in gj['features'] if f['properties'].get('status') == 'Active']
         dumps_flat = []
         for f in active:
@@ -552,7 +583,7 @@ if HAS_FASTAPI:
     @app.get("/api/summary", tags=["Dashboard"],
              summary="Single endpoint for dashboard: all KPIs in one call")
     async def get_summary():
-        dumps_gj = load_json("thanisandra_dumps.geojson") or {"features": []}
+        dumps_gj = load_json("detected_dumps.geojson") or {"features": []}
         active   = [f for f in dumps_gj['features'] if f['properties'].get('status') == 'Active']
         total_co2 = sum(f['properties'].get('co2_eq_tonnes', 0) for f in active)
         total_cc  = sum(f['properties'].get('carbon_credit_inr', 0) for f in active)

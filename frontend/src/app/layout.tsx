@@ -24,8 +24,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable} h-full`}>
-      <body className="h-full flex flex-col">{children}</body>
+    <html
+      lang="en"
+      className={`${syne.variable} ${dmSans.variable} h-full`}
+      suppressHydrationWarning
+    >
+      <body className="h-full flex flex-col" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

@@ -46,3 +46,5 @@ twilio>=9.0.0
 # Utilities
 python-dotenv>=1.0.0
 requests>=2.31.0
+pystac-client>=0.7.0  # STAC API client for Sentinel-2 discovery
+planetary-computer>=1.0.0  # signs Planetary Computer asset URLs for Sentinel-2 COG reads

@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-05-04T15:19:22.750014",
+  "bbox": [
+    77.5,
+    13.0,
+    77.6,
+    13.1
+  ],
+  "max_cloud": 50.0,
+  "status": "ok",
+  "mode": "stac_fetch_skipped_same_scene",
+  "scenes_found": 20,
+  "scene_selected": {
+    "id": "S2B_MSIL2A_20260502T050649_R019_T43PGQ_20260502T085722",
+    "datetime": "2026-05-02T05:06:49.024000Z",
+    "cloud_cover": 27.226773
+  },
+  "bands_downloaded": 0,
+  "error": null,
+  "output_file": "data\\s2_curr.tif",
+  "prev_file": "data\\s2_prev.tif"
+}
