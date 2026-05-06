@@ -1,11 +1,25 @@
 import type { DumpSite } from "@/types";
 
-const STREAM_DOT: Record<string, string> = {
-  "Dry/Blue": "#2563eb",
-  "Wet/Green": "#10b981",
-  "Sanitary/Red": "#ef4444",
-  "Hazardous/Black": "#374151",
+const STREAM_CONFIG: Record<string, { color: string; bg: string; label: string }> = {
+  "Dry/Blue":       { color: "#3b82f6", bg: "rgba(59,130,246,0.12)",  label: "Dry" },
+  "Wet/Green":      { color: "#22c55e", bg: "rgba(34,197,94,0.12)",   label: "Wet" },
+  "Sanitary/Red":   { color: "#ef4444", bg: "rgba(239,68,68,0.12)",   label: "San" },
+  "Hazardous/Black":{ color: "#a855f7", bg: "rgba(168,85,247,0.12)",  label: "Haz" },
 };
+
+function riskColor(score: number) {
+  if (score >= 0.85) return "#ef4444";
+  if (score >= 0.70) return "#f97316";
+  if (score >= 0.50) return "#eab308";
+  return "#22c55e";
+}
+
+function riskLabel(score: number) {
+  if (score >= 0.85) return "CRITICAL";
+  if (score >= 0.70) return "HIGH";
+  if (score >= 0.50) return "MED";
+  return "LOW";
+}
 
 export default function DumpList({
   dumps,
@@ -22,55 +36,128 @@ export default function DumpList({
     <div className="card">
       <div className="card-header">
         <span className="card-title">Detected Dump Sites</span>
-        <span className="badge badge-red">{active.length} active</span>
+        <div className="flex items-center gap-2">
+          <span
+            className="text-[9px] font-bold px-2 py-0.5 rounded"
+            style={{ background: "rgba(239,68,68,0.12)", color: "#f87171", border: "1px solid rgba(239,68,68,0.2)" }}
+          >
+            {active.filter((d) => d.risk_score >= 0.85).length} CRITICAL
+          </span>
+          <span className="badge badge-red">{active.length} active</span>
+        </div>
       </div>
+
       <div>
-        {active.map((d) => {
+        {active.map((d, i) => {
           const riskPct = Math.round(d.risk_score * 100);
-          const critical = d.risk_score >= 0.85;
-          const riskColor = critical ? "#ef4444" : "#f97316";
+          const rc = riskColor(d.risk_score);
+          const stream = STREAM_CONFIG[d.swm_stream] ?? { color: "#64748b", bg: "rgba(100,116,139,0.12)", label: "Mix" };
+          const isCritical = d.risk_score >= 0.85;
+
           return (
             <button
               key={d.id}
               onClick={() => onSelect(d)}
-              className="w-full text-left px-3.5 py-3 hover:bg-[#f8fafc] transition-colors border-b border-[#f1f5f9] last:border-b-0"
+              className="w-full text-left transition-all"
+              style={{
+                padding: "10px 14px",
+                borderBottom: "1px solid var(--border-light)",
+                background: isCritical ? "rgba(239,68,68,0.025)" : "transparent",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = isCritical ? "rgba(239,68,68,0.025)" : "transparent";
+              }}
             >
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2 min-w-0">
-                  <div
-                    className="w-2 h-2 rounded-full shrink-0"
-                    style={{ background: riskColor }}
-                  />
-                  <span className="text-[12px] font-semibold text-[#0f172a] truncate">{d.name}</span>
-                </div>
-                <span
-                  className="text-[12px] font-bold tabular-nums shrink-0 ml-2"
-                  style={{ color: riskColor }}
-                >
-                  {riskPct}%
-                </span>
-              </div>
-              <div className="ml-4">
-                <div className="h-1.5 rounded-full bg-[#f1f5f9] overflow-hidden mb-1.5">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{ width: `${riskPct}%`, background: riskColor }}
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-[#94a3b8]">
-                  <div className="flex items-center gap-1">
+              {/* Row 1: name + risk score */}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  {/* Rank */}
+                  <span
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: 700,
+                      color: "var(--mu)",
+                      minWidth: "14px",
+                      fontVariantNumeric: "tabular-nums",
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+
+                  {/* Risk dot — pulsing for critical */}
+                  <div className="relative shrink-0">
                     <div
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: STREAM_DOT[d.swm_stream] ?? "#64748b" }}
+                      className="w-2 h-2 rounded-full"
+                      style={{ background: rc, boxShadow: `0 0 6px ${rc}80` }}
                     />
-                    <span>{d.swm_stream}</span>
+                    {isCritical && (
+                      <div
+                        className="absolute inset-0 rounded-full animate-ping"
+                        style={{ background: rc, opacity: 0.4 }}
+                      />
+                    )}
                   </div>
-                  <span>{d.area_sqm}m²</span>
-                  <span>{d.detected_date}</span>
-                  {d.estimated_weight_tonnes != null && (
-                    <span className="font-semibold text-[#f59e0b]">~{d.estimated_weight_tonnes}T</span>
-                  )}
+
+                  <span
+                    className="truncate"
+                    style={{ fontSize: "11.5px", fontWeight: 600, color: "var(--tx)" }}
+                  >
+                    {d.name}
+                  </span>
                 </div>
+
+                {/* Risk badge */}
+                <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                  <span
+                    className="text-[8.5px] font-bold px-1.5 py-0.5 rounded"
+                    style={{ background: `${rc}18`, color: rc, border: `1px solid ${rc}30` }}
+                  >
+                    {riskLabel(d.risk_score)}
+                  </span>
+                  <span style={{ fontSize: "12px", fontWeight: 800, color: rc, fontVariantNumeric: "tabular-nums" }}>
+                    {riskPct}%
+                  </span>
+                </div>
+              </div>
+
+              {/* Row 2: risk bar */}
+              <div className="mb-2 ml-9">
+                <div className="risk-bar" style={{ height: "3px" }}>
+                  <div
+                    className="risk-bar-fill"
+                    style={{ width: `${riskPct}%`, background: rc }}
+                  />
+                </div>
+              </div>
+
+              {/* Row 3: metadata pills */}
+              <div className="flex items-center gap-2 ml-9 flex-wrap">
+                {/* Stream */}
+                <span
+                  className="text-[9px] font-semibold px-1.5 py-0.5 rounded"
+                  style={{ background: stream.bg, color: stream.color, border: `1px solid ${stream.color}25` }}
+                >
+                  {stream.label}
+                </span>
+
+                <span style={{ fontSize: "9.5px", color: "var(--mu)" }}>{d.area_sqm}m²</span>
+
+                {d.estimated_weight_tonnes != null && (
+                  <span style={{ fontSize: "9.5px", fontWeight: 600, color: "#fbbf24" }}>
+                    ~{d.estimated_weight_tonnes}T
+                  </span>
+                )}
+
+                <span style={{ fontSize: "9px", color: "var(--mu)" }}>{d.detected_date}</span>
+
+                {d.carbon_credit_inr > 0 && (
+                  <span style={{ fontSize: "9px", fontWeight: 600, color: "#4ade80" }}>
+                    ₹{(d.carbon_credit_inr / 1000).toFixed(1)}K credit
+                  </span>
+                )}
               </div>
             </button>
           );

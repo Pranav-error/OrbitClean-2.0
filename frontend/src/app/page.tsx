@@ -21,11 +21,11 @@ const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
 
 type Tab = "overview" | "routes" | "cleanup" | "intel";
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "routes", label: "Fleet & Routes" },
-  { id: "cleanup", label: "Cleanup Ops" },
-  { id: "intel", label: "ML & Community" },
+const TABS: { id: Tab; label: string; icon: string }[] = [
+  { id: "overview", label: "Overview",   icon: "◉" },
+  { id: "routes",   label: "Routes",     icon: "⬡" },
+  { id: "cleanup",  label: "Cleanup",    icon: "✓" },
+  { id: "intel",    label: "ML Intel",   icon: "⬡" },
 ];
 
 export default function DashboardPage() {
@@ -39,64 +39,156 @@ export default function DashboardPage() {
   const activeDumps = DUMPS.filter((d) => d.status === "Active");
   const totalWeight = activeDumps.reduce((s, d) => s + (d.estimated_weight_tonnes ?? 0), 0);
   const f = WARD_ROUTES.fleet_summary;
+  const criticalDumps = activeDumps.filter((d) => d.risk_score >= 0.85);
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-[#f8fafc]">
+    <div className="h-screen flex flex-col overflow-hidden" style={{ background: "var(--bg)" }}>
 
       {/* ══ HEADER ══ */}
-      <header className="flex items-center justify-between px-5 py-2.5 bg-white border-b border-[#e2e8f0] z-50 shrink-0">
-        <div className="flex items-center gap-4">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#10b981] to-[#059669] flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                <path d="M2 12h20"/>
-              </svg>
-            </div>
-            <div>
-              <div className="text-[15px] font-bold tracking-tight leading-none">
-                <span className="text-[#10b981]">Orbit</span><span className="text-[#0f172a]">Clean</span>
-                <span className="text-[10px] text-[#94a3b8] font-medium ml-1.5">2.0</span>
+      <header
+        className="shrink-0 z-50"
+        style={{
+          background: "linear-gradient(180deg, #0d1225 0%, #0a1020 100%)",
+          borderBottom: "1px solid var(--border)",
+          boxShadow: "0 1px 0 rgba(20,184,166,0.06)",
+        }}
+      >
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-5 py-3">
+          {/* Left: Logo + location */}
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3">
+              {/* Satellite icon */}
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #14b8a6 0%, #0891b2 100%)",
+                  boxShadow: "0 0 20px rgba(20,184,166,0.35)",
+                }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
+                  <path d="M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                </svg>
               </div>
-              <div className="text-[10px] text-[#94a3b8] leading-none mt-0.5">Thanisandra Ward 26, Bengaluru</div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      fontFamily: "var(--font-syne), Syne, sans-serif",
+                      fontSize: "17px",
+                      fontWeight: 800,
+                      letterSpacing: "-0.02em",
+                      color: "#14b8a6",
+                    }}
+                  >
+                    Orbit
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-syne), Syne, sans-serif",
+                      fontSize: "17px",
+                      fontWeight: 800,
+                      letterSpacing: "-0.02em",
+                      color: "#e2e8f0",
+                    }}
+                  >
+                    Clean
+                  </span>
+                  <span
+                    className="px-1.5 py-0.5 rounded text-[9px] font-bold"
+                    style={{ background: "rgba(20,184,166,0.15)", color: "#2dd4bf", border: "1px solid rgba(20,184,166,0.25)" }}
+                  >
+                    2.0
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+                  <span style={{ fontSize: "10px", color: "var(--mu)", letterSpacing: "0.02em" }}>
+                    Thanisandra Ward 26 · BBMP · Live
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div className="h-8 w-px" style={{ background: "var(--border)" }} />
+
+            {/* KPI strip */}
+            <div className="flex items-center gap-2">
+              <HeaderKPI value={activeDumps.length} label="Active Sites" color="#ef4444" critical={criticalDumps.length > 0} />
+              <HeaderKPI value={criticalDumps.length} label="Critical" color="#f97316" />
+              <HeaderKPI value={`${totalWeight.toFixed(1)}T`} label="Est. Waste" color="#f59e0b" />
+              <HeaderKPI value={f.total_auto_tippers} label="Tippers" color="#3b82f6" />
+              <HeaderKPI value={RISK_GRID.length} label="Risk Cells" color="#a855f7" />
+              {cleanedSites.length > 0 && (
+                <HeaderKPI value={cleanedSites.length} label="Cleaned" color="#22c55e" />
+              )}
             </div>
           </div>
 
-          <div className="h-8 w-px bg-[#e2e8f0]" />
-
-          {/* KPI strip */}
+          {/* Right: Status + actions */}
           <div className="flex items-center gap-3">
-            <KPIPill value={activeDumps.length} label="Active Sites" color="#ef4444" />
-            <KPIPill value={`${totalWeight.toFixed(1)}T`} label="Est. Waste" color="#f59e0b" />
-            <KPIPill value={f.total_auto_tippers} label="Tippers" color="#0ea5e9" />
-            <KPIPill value={`${f.total_daily_waste_tonnes}T`} label="Daily TPD" color="#8b5cf6" />
-            <KPIPill value={RISK_GRID.length} label="Risk Cells" color="#f97316" />
-            {cleanedSites.length > 0 && (
-              <KPIPill value={cleanedSites.length} label="Cleaned" color="#10b981" />
+            {fieldReports.length > 0 && (
+              <div
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg"
+                style={{ background: "rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.25)" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#a855f7] animate-pulse" />
+                <span style={{ fontSize: "10px", fontWeight: 600, color: "#c084fc" }}>
+                  {fieldReports.length} field capture{fieldReports.length > 1 ? "s" : ""}
+                </span>
+              </div>
             )}
+
+            <div
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg"
+              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+              <span style={{ fontSize: "10px", fontWeight: 600, color: "#4ade80" }}>ML Active · AUC 0.80</span>
+            </div>
+
+            <div
+              className="px-3 py-1.5 rounded-lg"
+              style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.2)" }}
+            >
+              <span style={{ fontSize: "10px", fontWeight: 500, color: "#60a5fa" }}>SWM Rules 2026</span>
+            </div>
+
+            <Link
+              href="/qr"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-all hover:brightness-110"
+              style={{
+                background: "linear-gradient(135deg, #14b8a6 0%, #0891b2 100%)",
+                color: "white",
+                fontSize: "11px",
+                boxShadow: "0 2px 8px rgba(20,184,166,0.3)",
+              }}
+            >
+              <span>⬡</span>
+              <span>Route Simulation</span>
+            </Link>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/qr"
-            className="px-3 py-1.5 rounded-lg bg-[#2563eb] text-white text-[11px] font-semibold hover:bg-[#1d4ed8] transition-colors"
-          >
-            🗺 Route Simulation
-          </Link>
-          {fieldReports.length > 0 && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#f5f3ff] border border-[#e9e5ff]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse" />
-              <span className="text-[10px] font-semibold text-[#7c3aed]">{fieldReports.length} field captures</span>
-            </div>
-          )}
-          <div className="px-2.5 py-1 rounded-full bg-[#f0fdf4] border border-[#bbf7d0] text-[10px] font-semibold text-[#059669]">
-            ML Active · AUC 0.80
+        {/* Sub-bar: satellite info + alert strip */}
+        <div
+          className="flex items-center justify-between px-5 py-1.5"
+          style={{ borderTop: "1px solid var(--border-light)", background: "rgba(0,0,0,0.2)" }}
+        >
+          <div className="flex items-center gap-4">
+            <SubBarItem icon="🛰" label="Sentinel-2A" value="20 Mar 2026 · T43PGQ" />
+            <SubBarDot />
+            <SubBarItem icon="📡" label="Scene" value="~90,000 px · 10m res · <5% cloud" />
+            <SubBarDot />
+            <SubBarItem icon="🎯" label="Ground Truth" value="2/2 matched (73m, 82m)" />
+            <SubBarDot />
+            <SubBarItem icon="🏭" label="Carbon Credits" value="₹4,97,000 · 248T CO₂-eq" color="#4ade80" />
           </div>
-          <div className="px-2.5 py-1 rounded-full bg-[#f8fafc] border border-[#e2e8f0] text-[10px] font-medium text-[#64748b]">
-            BBMP SWM 2026
+          <div className="flex items-center gap-1.5">
+            <span style={{ fontSize: "9px", color: "var(--mu)" }}>AWI SpaceTech Hackathon · Team Resonance · REVA University</span>
           </div>
         </div>
       </header>
@@ -123,83 +215,92 @@ export default function DashboardPage() {
 
           {/* Map controls — top right */}
           <div className="absolute top-3 right-3 z-[400] flex flex-col gap-2">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/95 border border-[#e2e8f0] shadow-sm backdrop-blur-sm">
-              <MapToggle
-                label="Risk Heatmap"
-                active={showHeatmap}
-                color="#ef4444"
-                onClick={() => setShowHeatmap((v) => !v)}
-              />
-              <div className="w-px h-4 bg-[#e2e8f0]" />
-              <MapToggle
-                label="Zone Coverage"
-                active={showRoutes}
-                color="#0ea5e9"
-                onClick={() => setShowRoutes((v) => !v)}
-              />
+            <div
+              className="flex items-center gap-3 px-3 py-2 rounded-xl backdrop-blur-sm"
+              style={{ background: "rgba(13,18,37,0.92)", border: "1px solid var(--border)", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}
+            >
+              <MapToggle label="Risk Heatmap" active={showHeatmap} color="#ef4444" onClick={() => setShowHeatmap((v) => !v)} />
+              <div className="w-px h-4" style={{ background: "var(--border)" }} />
+              <MapToggle label="Zone Coverage" active={showRoutes} color="#3b82f6" onClick={() => setShowRoutes((v) => !v)} />
             </div>
+
             <Link
               href="/qr"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#2563eb] text-white text-[11px] font-semibold shadow-md hover:bg-[#1d4ed8] transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl font-semibold text-white text-[11px] transition-all hover:brightness-110"
+              style={{
+                background: "linear-gradient(135deg, rgba(20,184,166,0.9) 0%, rgba(8,145,178,0.9) 100%)",
+                border: "1px solid rgba(20,184,166,0.4)",
+                boxShadow: "0 4px 16px rgba(20,184,166,0.25)",
+                backdropFilter: "blur(8px)",
+              }}
             >
               <span>🚛</span>
               <span>Live Route Simulation →</span>
             </Link>
           </div>
 
-          {/* Field capture notification — top center */}
+          {/* New capture notification */}
           {newCount > 0 && (
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[400] px-4 py-2 rounded-lg bg-[#7c3aed] text-white text-[11px] font-semibold shadow-lg animate-pulse">
+            <div
+              className="absolute top-3 left-1/2 -translate-x-1/2 z-[400] flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-[11px]"
+              style={{
+                background: "rgba(168,85,247,0.9)",
+                border: "1px solid rgba(168,85,247,0.5)",
+                boxShadow: "0 4px 16px rgba(168,85,247,0.35)",
+                color: "white",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               +{newCount} new field capture{newCount > 1 ? "s" : ""} from iPhone
             </div>
           )}
 
           {/* Legend — bottom right */}
           {(showHeatmap || showRoutes) && (
-            <div className="absolute bottom-4 right-3 z-[400] px-3 py-2.5 rounded-lg bg-white/95 border border-[#e2e8f0] shadow-sm backdrop-blur-sm">
+            <div
+              className="absolute bottom-4 right-3 z-[400] px-3 py-3 rounded-xl backdrop-blur-sm"
+              style={{ background: "rgba(13,18,37,0.92)", border: "1px solid var(--border)", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}
+            >
               {showHeatmap && (
                 <>
-                  <div className="text-[9px] text-[#94a3b8] uppercase tracking-wider font-semibold mb-2">Risk Level</div>
+                  <div className="section-label mb-2">Risk Level</div>
                   {[
-                    { color: "#ef4444", label: "Critical  >= 85%" },
-                    { color: "#f97316", label: "High  70-84%" },
+                    { color: "#ef4444", label: "Critical ≥ 85%" },
+                    { color: "#f97316", label: "High  70–84%" },
+                    { color: "#eab308", label: "Medium 50–69%" },
                   ].map((r) => (
-                    <div key={r.label} className="flex items-center gap-2 mb-1">
-                      <div className="w-2.5 h-2.5 rounded" style={{ background: r.color }} />
-                      <span className="text-[10px] text-[#64748b]">{r.label}</span>
+                    <div key={r.label} className="flex items-center gap-2 mb-1.5">
+                      <div className="w-2 h-2 rounded" style={{ background: r.color, boxShadow: `0 0 4px ${r.color}80` }} />
+                      <span style={{ fontSize: "10px", color: "var(--tx2)" }}>{r.label}</span>
                     </div>
                   ))}
                   {cleanedSites.length > 0 && (
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="w-2.5 h-2.5 rounded bg-[#10b981]" />
-                      <span className="text-[10px] text-[#64748b]">Cleaned & Verified</span>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-2 h-2 rounded" style={{ background: "#22c55e", boxShadow: "0 0 4px rgba(34,197,94,0.5)" }} />
+                      <span style={{ fontSize: "10px", color: "var(--tx2)" }}>Cleaned & Verified</span>
                     </div>
                   )}
-                  {communityPhotos.length > 0 && (
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="w-2.5 h-2.5 rounded bg-[#f59e0b]" />
-                      <span className="text-[10px] text-[#64748b]">Community Reports</span>
-                    </div>
-                  )}
-                  <div className="text-[9px] text-[#94a3b8] mt-2 pt-2 border-t border-[#e2e8f0]">
-                    {RISK_GRID.length} ML-predicted cells · Gradient Boosting
+                  <div
+                    className="mt-2 pt-2 text-center"
+                    style={{ borderTop: "1px solid var(--border-light)", fontSize: "9px", color: "var(--mu)" }}
+                  >
+                    {RISK_GRID.length} XGBoost cells
                   </div>
                 </>
               )}
+
               {showRoutes && (
                 <>
-                  {showHeatmap && <div className="mt-2 pt-2 border-t border-[#e2e8f0]" />}
-                  <div className="text-[9px] text-[#94a3b8] uppercase tracking-wider font-semibold mb-2">Zone Coverage</div>
+                  {showHeatmap && <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--border-light)" }} />}
+                  {!showHeatmap && null}
+                  <div className="section-label mb-2 mt-1">Zone Coverage</div>
                   {WARD_ROUTES.zones.map((z) => (
-                    <div key={z.zone_id} className="flex items-center gap-2 mb-1">
-                      <div className="w-6 h-0.5 rounded" style={{ background: z.color }} />
-                      <span className="text-[10px] text-[#64748b]">{z.zone_id} — {z.route_length_km}km</span>
+                    <div key={z.zone_id} className="flex items-center gap-2 mb-1.5">
+                      <div className="w-5 h-0.5 rounded" style={{ background: z.color }} />
+                      <span style={{ fontSize: "10px", color: "var(--tx2)" }}>{z.zone_id} · {z.route_length_km}km</span>
                     </div>
                   ))}
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="w-3 h-3 rounded bg-[#0ea5e9]" />
-                    <span className="text-[10px] text-[#64748b]">Depot / Start</span>
-                  </div>
                 </>
               )}
             </div>
@@ -208,9 +309,12 @@ export default function DashboardPage() {
           {/* Live captures — bottom left */}
           {fieldReports.length > 0 && (
             <div className="absolute bottom-4 left-4 z-[400]">
-              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/95 border border-[#e2e8f0] shadow-sm backdrop-blur-sm">
-                <div className="w-2 h-2 rounded-full bg-[#7c3aed] animate-pulse" />
-                <span className="text-[11px] text-[#334155] font-medium">
+              <div
+                className="flex items-center gap-2 px-3 py-2 rounded-xl backdrop-blur-sm"
+                style={{ background: "rgba(13,18,37,0.92)", border: "1px solid rgba(168,85,247,0.3)", boxShadow: "0 4px 16px rgba(0,0,0,0.4)" }}
+              >
+                <div className="w-2 h-2 rounded-full bg-[#a855f7] animate-pulse" />
+                <span style={{ fontSize: "11px", color: "var(--tx2)", fontWeight: 500 }}>
                   {fieldReports.length} field capture{fieldReports.length > 1 ? "s" : ""} live
                 </span>
               </div>
@@ -219,8 +323,14 @@ export default function DashboardPage() {
         </main>
 
         {/* ══ RIGHT SIDEBAR ══ */}
-        <aside className="w-[380px] shrink-0 flex flex-col border-l border-[#e2e8f0] bg-[#f8fafc]">
-
+        <aside
+          className="shrink-0 flex flex-col"
+          style={{
+            width: "var(--sidebar-w)",
+            background: "var(--surface)",
+            borderLeft: "1px solid var(--border)",
+          }}
+        >
           {/* Tabs */}
           <div className="sidebar-tabs">
             {TABS.map((tab) => (
@@ -240,48 +350,52 @@ export default function DashboardPage() {
             {/* ── OVERVIEW TAB ── */}
             {activeTab === "overview" && (
               <div className="sidebar-section">
-                {/* Ward summary card */}
+                {/* Ward summary */}
                 <div className="card">
                   <div className="card-header">
                     <span className="card-title">Ward Summary</span>
-                    <span className="badge badge-blue">Ward 26</span>
+                    <span className="badge badge-teal">Ward 26</span>
                   </div>
                   <div className="p-3">
                     <div className="grid grid-cols-4 gap-2">
                       <div className="kpi-pill">
-                        <span className="kpi-value text-[#ef4444]">{activeDumps.length}</span>
+                        <span className="kpi-value" style={{ color: "#ef4444" }}>{activeDumps.length}</span>
                         <span className="kpi-label">Dumps</span>
                       </div>
                       <div className="kpi-pill">
-                        <span className="kpi-value text-[#f59e0b]">{totalWeight.toFixed(1)}T</span>
+                        <span className="kpi-value" style={{ color: "#f59e0b" }}>{totalWeight.toFixed(1)}T</span>
                         <span className="kpi-label">Waste</span>
                       </div>
                       <div className="kpi-pill">
-                        <span className="kpi-value text-[#0ea5e9]">{f.total_auto_tippers}</span>
+                        <span className="kpi-value" style={{ color: "#3b82f6" }}>{f.total_auto_tippers}</span>
                         <span className="kpi-label">Tippers</span>
                       </div>
                       <div className="kpi-pill">
-                        <span className="kpi-value text-[#10b981]">{cleanedSites.length}</span>
+                        <span className="kpi-value" style={{ color: "#22c55e" }}>{cleanedSites.length}</span>
                         <span className="kpi-label">Cleaned</span>
                       </div>
                     </div>
-                    <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
-                      <div className="rounded-lg bg-[#f1f5f9] px-3 py-2">
-                        <span className="text-[#64748b]">Area: </span>
-                        <span className="font-semibold text-[#334155]">8.2 km²</span>
-                      </div>
-                      <div className="rounded-lg bg-[#f1f5f9] px-3 py-2">
-                        <span className="text-[#64748b]">Population: </span>
-                        <span className="font-semibold text-[#334155]">52,000</span>
-                      </div>
-                      <div className="rounded-lg bg-[#f1f5f9] px-3 py-2">
-                        <span className="text-[#64748b]">Households: </span>
-                        <span className="font-semibold text-[#334155]">~13,000</span>
-                      </div>
-                      <div className="rounded-lg bg-[#f1f5f9] px-3 py-2">
-                        <span className="text-[#64748b]">Daily TPD: </span>
-                        <span className="font-semibold text-[#334155]">{f.total_daily_waste_tonnes}T</span>
-                      </div>
+
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      {[
+                        { label: "Area", value: "8.2 km²" },
+                        { label: "Population", value: "52,000" },
+                        { label: "Households", value: "~13,000" },
+                        { label: "Daily TPD", value: `${f.total_daily_waste_tonnes}T` },
+                      ].map((item) => (
+                        <div
+                          key={item.label}
+                          className="rounded-lg px-3 py-2"
+                          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--border-light)" }}
+                        >
+                          <span style={{ fontSize: "9px", color: "var(--mu)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                            {item.label}
+                          </span>
+                          <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--tx)", marginTop: "2px" }}>
+                            {item.value}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -325,29 +439,82 @@ export default function DashboardPage() {
   );
 }
 
-/* ── Small components ── */
+/* ══ Sub-components ══ */
 
-function KPIPill({ value, label, color }: { value: string | number; label: string; color: string }) {
+function HeaderKPI({
+  value,
+  label,
+  color,
+  critical,
+}: {
+  value: string | number;
+  label: string;
+  color: string;
+  critical?: boolean;
+}) {
   return (
-    <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[#f8fafc] border border-[#e2e8f0]">
-      <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
-      <span className="text-[12px] font-bold tabular-nums" style={{ color }}>{value}</span>
-      <span className="text-[10px] text-[#94a3b8]">{label}</span>
+    <div
+      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
+      style={{
+        background: `${color}10`,
+        border: `1px solid ${color}28`,
+        boxShadow: critical ? `0 0 8px ${color}30` : "none",
+      }}
+    >
+      <span style={{ fontSize: "12px", fontWeight: 700, color, fontVariantNumeric: "tabular-nums" }}>
+        {value}
+      </span>
+      <span style={{ fontSize: "9.5px", color: "var(--mu)", letterSpacing: "0.02em" }}>{label}</span>
     </div>
   );
 }
 
-function MapToggle({ label, active, color, onClick }: { label: string; active: boolean; color: string; onClick: () => void }) {
+function SubBarItem({
+  icon,
+  label,
+  value,
+  color,
+}: {
+  icon: string;
+  label: string;
+  value: string;
+  color?: string;
+}) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <span style={{ fontSize: "10px" }}>{icon}</span>
+      <span style={{ fontSize: "9px", color: "var(--mu)" }}>{label}:</span>
+      <span style={{ fontSize: "9px", fontWeight: 600, color: color ?? "var(--tx2)" }}>{value}</span>
+    </div>
+  );
+}
+
+function SubBarDot() {
+  return <span style={{ color: "var(--mu2)", fontSize: "8px" }}>·</span>;
+}
+
+function MapToggle({
+  label,
+  active,
+  color,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  color: string;
+  onClick: () => void;
+}) {
   return (
     <button onClick={onClick} className="flex items-center gap-2 text-[11px] font-medium">
       <div
-        className="w-3 h-3 rounded border-2 transition-all"
+        className="w-3 h-3 rounded transition-all"
         style={{
           background: active ? color : "transparent",
-          borderColor: active ? color : "#cbd5e1",
+          border: `2px solid ${active ? color : "var(--border)"}`,
+          boxShadow: active ? `0 0 6px ${color}60` : "none",
         }}
       />
-      <span className={active ? "text-[#0f172a]" : "text-[#94a3b8]"}>{label}</span>
+      <span style={{ color: active ? "var(--tx)" : "var(--mu)" }}>{label}</span>
     </button>
   );
 }
