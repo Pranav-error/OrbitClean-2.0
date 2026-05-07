@@ -21,19 +21,36 @@ except ImportError:
 
 
 SYSTEM_PROMPT = """You are OrbitClean's spatial intelligence assistant for BBMP (Bruhat Bengaluru Mahanagara Palike).
-You have access to real-time data on illegal dump sites, waste risk predictions, and recycler locations in Bengaluru.
+You have access to real-time satellite data on illegal dump sites, waste risk predictions, recycler locations, \
+route optimization, anomaly alerts, and 7-day waste forecasts for Bengaluru's Thanisandra Ward 26.
 
 Your role: Answer natural-language questions about dump sites, enforcement priorities, and SWM compliance.
 Be concise, data-driven, and action-oriented. Always cite specific GPS coordinates, distances, or risk scores when relevant.
 Suggest concrete next steps for BBMP officers.
 
+Data available to you:
+- 48 satellite-detected dump sites (Sentinel-2A, 10m resolution)
+- XGBoost risk grid (552 cells, 100m each)
+- 7 registered kabadiwalas/recyclers
+- 5-zone optimised route plan (Clarke-Wright CVRP)
+- 7-day zone-level waste forecasts (Prophet model)
+- Isolation Forest anomaly/surge alerts
+- Ward Accountability Scores (WAScore) for 5 wards
+- Water body contamination risk (IPCC Tier 1)
+- Carbon credit estimates (₹2,000/tonne CO₂-eq)
+- SWM Rules 2026 compliance records
+
 When generating enforcement reports, use this structure:
-- Site ID and location
+- Site ID and location (GPS)
 - Waste type and volume estimate
 - Risk score and recurrence probability
-- Recommended intervention with ROI
+- Recommended intervention with ROI and payback period
 - Nearest recycler for circular economy routing
+- SWM Rules 2026 compliance status
 
+Carbon credit price: ₹2,000/tonne CO₂-eq (VCM market rate).
+Fleet sizing: max(ceil(households/750), ceil(daily_wet_kg/500)) per zone.
+Community verification: 3 independent reports within 200m confirms a dump.
 Today's date: {today}
 """
 
@@ -42,18 +59,32 @@ def load_context_data():
     """Load all available data files for LLM context."""
     context = {}
     data_files = {
-        'dumps': 'data/thanisandra_dumps.geojson',
-        'risk_grid': 'data/risk_grid.geojson',
+        'dumps': 'data/detected_dumps.geojson',
+        'dumps_fallback': 'data/thanisandra_dumps.geojson',
+        'risk_grid': 'data/risk_grid_predicted.geojson',
+        'risk_grid_fallback': 'data/risk_grid.geojson',
         'recyclers': 'data/recyclers.geojson',
         'ward_scores': 'data/ward_scores.json',
         'water_bodies': 'data/water_bodies.geojson',
+        'route_solution': 'data/route_solution.json',
+        'anomaly_alerts': 'data/anomaly_alerts.json',
+        'waste_forecast': 'data/waste_forecast.json',
+        'water_risk': 'data/water_risk_results.geojson',
     }
     for key, path in data_files.items():
+        if key.endswith('_fallback'):
+            continue
         if os.path.exists(path):
             with open(path) as f:
                 context[key] = json.load(f)
         else:
-            context[key] = None
+            # try fallback
+            fb = data_files.get(key + '_fallback')
+            if fb and os.path.exists(fb):
+                with open(fb) as f:
+                    context[key] = json.load(f)
+            else:
+                context[key] = None
     return context
 
 
@@ -89,6 +120,43 @@ def summarise_context(context):
             lines.append(f"  {p.get('cell_id','?')}: GPS {c[1]:.4f},{c[0]:.4f} | Ward: {p.get('ward','?')} | Score: {p.get('risk_score','?')}")
     lines.append("")
 
+    # Route solution
+    route = context.get('route_solution')
+    if route and route.get('zones'):
+        lines.append(f"=== ROUTE SOLUTION ({len(route['zones'])} zones) ===")
+        for z in route['zones']:
+            lines.append(f"  Zone {z.get('zone_id','?')}: {z.get('zone_name','?')} | "
+                        f"Trucks: {z.get('num_trucks',1)} | Length: {z.get('route_length_km','?')}km | "
+                        f"Households: {z.get('households','?')} | Daily waste: {z.get('daily_waste_tonnes','?')}T")
+    lines.append("")
+
+    # Anomaly alerts
+    anomalies = context.get('anomaly_alerts')
+    if anomalies:
+        al = anomalies if isinstance(anomalies, list) else anomalies.get('alerts', [])
+        if al:
+            lines.append(f"=== ANOMALY ALERTS ({len(al)} active surges) ===")
+            for a in al[:5]:
+                lines.append(f"  {a.get('zone','?')}: score={a.get('anomaly_score','?')} | "
+                            f"Waste: {a.get('current_waste_tonnes','?')}T | "
+                            f"Expected: {a.get('expected_waste_tonnes','?')}T")
+    lines.append("")
+
+    # Waste forecast
+    forecast = context.get('waste_forecast')
+    if forecast:
+        fl = forecast if isinstance(forecast, list) else forecast.get('forecast', [])
+        if fl:
+            zones_seen = set()
+            lines.append("=== 7-DAY WASTE FORECAST (next 7 days, tonnes/day) ===")
+            for f in fl:
+                zn = f.get('zone_name', '?')
+                if zn not in zones_seen:
+                    zones_seen.add(zn)
+                    lines.append(f"  {zn}: avg {f.get('predicted_waste_tonnes','?')}T/day | "
+                                f"trend={f.get('trend','?')}")
+    lines.append("")
+
     # Recyclers
     recyclers = context.get('recyclers')
     if recyclers and recyclers.get('features'):
@@ -121,8 +189,16 @@ def summarise_context(context):
     return "\n".join(lines)
 
 
-def query_claude(user_query, context_summary=None, stream=True):
-    """Send query to Claude API with spatial context."""
+def query_claude(user_query, context_summary=None, stream=True, history=None):
+    """Send query to Claude API with spatial context and optional conversation history.
+
+    Args:
+        user_query:       The current user message.
+        context_summary:  Pre-built text summary of all spatial data files.
+        stream:           If True, stream tokens to stdout (CLI mode).
+        history:          Optional list of prior turns —
+                          [{"role": "user"|"assistant", "content": str}, ...]
+    """
     if not HAS_ANTHROPIC:
         return mock_response(user_query)
 
@@ -134,35 +210,65 @@ def query_claude(user_query, context_summary=None, stream=True):
     client = anthropic.Anthropic(api_key=api_key)
     today  = datetime.now().strftime("%Y-%m-%d")
 
+    # System prompt — mark for caching (stable across requests)
+    system_blocks = [
+        {
+            "type": "text",
+            "text": SYSTEM_PROMPT.format(today=today),
+            "cache_control": {"type": "ephemeral"},
+        }
+    ]
+
+    # Build messages list
     messages = []
+
+    # Inject context as the very first user turn so it gets cached
     if context_summary:
-        messages.append({
+        ctx_turn = {
             "role": "user",
-            "content": f"Here is the current OrbitClean spatial database:\n\n{context_summary}\n\n"
-                       f"User query: {user_query}"
-        })
-    else:
-        messages.append({"role": "user", "content": user_query})
+            "content": [
+                {
+                    "type": "text",
+                    "text": (
+                        "Here is the current OrbitClean spatial database. "
+                        "Use it to answer all my questions.\n\n"
+                        + context_summary
+                    ),
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+        }
+        ctx_reply = {
+            "role": "assistant",
+            "content": "Understood. I have the full OrbitClean spatial database loaded — dump sites, risk grid, routes, forecasts, anomalies, recyclers, and water risk data. Ready for your questions.",
+        }
+        messages.append(ctx_turn)
+        messages.append(ctx_reply)
+
+    # Append prior conversation turns
+    if history:
+        for turn in history:
+            messages.append({"role": turn["role"], "content": turn["content"]})
+
+    # Append the current user query
+    messages.append({"role": "user", "content": user_query})
+
+    kwargs = dict(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1024,
+        system=system_blocks,
+        messages=messages,
+    )
 
     full_response = ""
     if stream:
-        with client.messages.stream(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=1024,
-            system=SYSTEM_PROMPT.format(today=today),
-            messages=messages,
-        ) as s:
+        with client.messages.stream(**kwargs) as s:
             for text in s.text_stream:
                 print(text, end="", flush=True)
                 full_response += text
         print()
     else:
-        response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=1024,
-            system=SYSTEM_PROMPT.format(today=today),
-            messages=messages,
-        )
+        response = client.messages.create(**kwargs)
         full_response = response.content[0].text
 
     return full_response

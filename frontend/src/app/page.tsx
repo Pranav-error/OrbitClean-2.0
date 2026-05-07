@@ -16,16 +16,18 @@ import RetrainStatus from "@/components/RetrainStatus";
 import CleanupTracker from "@/components/CleanupTracker";
 import MLInfo from "@/components/MLInfo";
 import WasteClassifier from "@/components/WasteClassifier";
+import AIChat from "@/components/AIChat";
 
 const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
 
-type Tab = "overview" | "routes" | "cleanup" | "intel";
+type Tab = "overview" | "routes" | "cleanup" | "intel" | "ai";
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: "overview", label: "Overview",   icon: "◉" },
   { id: "routes",   label: "Routes",     icon: "⬡" },
   { id: "cleanup",  label: "Cleanup",    icon: "✓" },
   { id: "intel",    label: "ML Intel",   icon: "⬡" },
+  { id: "ai",       label: "AI Chat",    icon: "✦" },
 ];
 
 export default function DashboardPage() {
@@ -430,6 +432,13 @@ export default function DashboardPage() {
                 <WasteClassifier />
                 <MLInfo />
                 <RetrainStatus />
+              </div>
+            )}
+
+            {/* ── AI CHAT TAB ── */}
+            {activeTab === "ai" && (
+              <div className="sidebar-section">
+                <AIChat />
               </div>
             )}
           </div>

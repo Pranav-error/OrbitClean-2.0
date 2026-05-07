@@ -89,9 +89,14 @@ if HAS_FASTAPI:
 
     # ── Request models ──────────────────────────────────────────────────────
 
+    class ChatTurn(BaseModel):
+        role: str  # "user" or "assistant"
+        content: str
+
     class NLQueryRequest(BaseModel):
         query: str
         use_claude: bool = True
+        history: list[ChatTurn] = []
 
     class ComplianceRecord(BaseModel):
         ward_id: int
@@ -482,8 +487,9 @@ if HAS_FASTAPI:
     async def nl_query(body: NLQueryRequest):
         context = load_context_data()
         ctx_summary = summarise_context(context)
+        history = [{"role": t.role, "content": t.content} for t in body.history]
         if body.use_claude and os.environ.get('ANTHROPIC_API_KEY'):
-            response = query_claude(body.query, ctx_summary, stream=False)
+            response = query_claude(body.query, ctx_summary, stream=False, history=history)
         else:
             response = mock_response(body.query)
         return {

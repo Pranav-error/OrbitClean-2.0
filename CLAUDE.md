@@ -179,7 +179,7 @@ Full list: 34 endpoints. See `backend/app.py` or `/docs` when running.
 ```
 frontend/src/
 ├── app/
-│   ├── page.tsx          # Main dashboard — tabs: Overview / Routes / Cleanup / ML
+│   ├── page.tsx          # Main dashboard — tabs: Overview / Routes / Cleanup / ML Intel / AI Chat
 │   ├── qr/page.tsx       # Mobile QR field capture page
 │   ├── mobile/           # Mobile-optimised capture flow
 │   └── api/              # Next.js route handlers (if any)
@@ -191,7 +191,8 @@ frontend/src/
 │   ├── CommunityUpload.tsx
 │   ├── RetrainStatus.tsx
 │   ├── MLInfo.tsx
-│   ├── ChatBox.tsx        # NL query via /api/query
+│   ├── ChatBox.tsx        # TruckSimulation — CVRP live demo (used by /qr page)
+│   ├── AIChat.tsx         # Multi-turn NL chat via /api/query (Claude Haiku + prompt caching)
 │   ├── CarbonCounter.tsx
 │   ├── ForecastChart.tsx
 │   ├── DumpList.tsx
