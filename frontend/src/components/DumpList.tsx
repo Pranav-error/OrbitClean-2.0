@@ -32,6 +32,26 @@ export default function DumpList({
     .filter((d) => d.status === "Active")
     .sort((a, b) => b.risk_score - a.risk_score);
 
+  if (active.length === 0) {
+    return (
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">Detected Dump Sites</span>
+          <span className="badge badge-red">0 active</span>
+        </div>
+        <div
+          className="flex flex-col items-center justify-center gap-2 py-10"
+          style={{ color: "var(--mu)" }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <span style={{ fontSize: "11px" }}>No dumps match your filter</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="card">
       <div className="card-header">
