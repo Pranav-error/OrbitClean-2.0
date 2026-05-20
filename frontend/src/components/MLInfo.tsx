@@ -17,12 +17,22 @@ export default function MLInfo() {
       </div>
       <div className="p-3.5">
         {/* Algorithm card */}
-        <div className="rounded-lg bg-gradient-to-br from-[#f5f3ff] to-[#ede9fe] border border-[#e9e5ff] px-3.5 py-3 mb-3">
+        <div
+          className="rounded-lg px-3.5 py-3 mb-3"
+          style={{ background: "var(--purple-soft)", border: "1px solid rgba(124,58,237,0.2)" }}
+        >
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[13px] font-bold text-[#7c3aed]">Gradient Boosting Classifier</span>
-            <span className="text-[9px] text-[#a78bfa] bg-white/60 px-2 py-0.5 rounded">scikit-learn</span>
+            <span style={{ fontSize: "13px", fontWeight: 700, color: "#7c3aed" }}>
+              Gradient Boosting Classifier
+            </span>
+            <span
+              className="px-2 py-0.5 rounded"
+              style={{ fontSize: "9px", color: "var(--mu)", background: "var(--card)", border: "1px solid var(--border)" }}
+            >
+              scikit-learn
+            </span>
           </div>
-          <p className="text-[10px] text-[#64748b] leading-relaxed mb-2.5">
+          <p style={{ fontSize: "10px", color: "var(--tx2)", lineHeight: 1.6, marginBottom: "10px" }}>
             Predicts where illegal dumps will form before they appear, using spatial context from OpenStreetMap + satellite imagery.
           </p>
           <div className="grid grid-cols-3 gap-2">
@@ -31,9 +41,17 @@ export default function MLInfo() {
               { label: "Labels", value: "20" },
               { label: "AUC Score", value: "0.80" },
             ].map((s) => (
-              <div key={s.label} className="text-center rounded-md bg-white/80 py-1.5 border border-[#e9e5ff]">
-                <div className="text-[14px] font-bold text-[#7c3aed] tabular-nums">{s.value}</div>
-                <div className="text-[8px] text-[#a78bfa] uppercase tracking-wide">{s.label}</div>
+              <div
+                key={s.label}
+                className="text-center rounded-md py-1.5"
+                style={{ background: "var(--card)", border: "1px solid rgba(124,58,237,0.2)" }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: 700, color: "#7c3aed", fontVariantNumeric: "tabular-nums" }}>
+                  {s.value}
+                </div>
+                <div style={{ fontSize: "8px", color: "var(--mu)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
@@ -45,16 +63,16 @@ export default function MLInfo() {
           {features.map((f) => (
             <div key={f.name} className="flex items-center gap-2.5">
               <div className="w-[100px] shrink-0">
-                <div className="text-[11px] font-medium text-[#334155]">{f.name}</div>
-                <div className="text-[9px] text-[#94a3b8]">{f.src}</div>
+                <div style={{ fontSize: "11px", fontWeight: 500, color: "var(--tx)" }}>{f.name}</div>
+                <div style={{ fontSize: "9px", color: "var(--mu)" }}>{f.src}</div>
               </div>
-              <div className="flex-1 h-2 rounded-full bg-[#f1f5f9] overflow-hidden">
+              <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
                 <div
                   className="h-full rounded-full transition-all"
                   style={{ width: `${f.pct * 4}%`, background: f.color }}
                 />
               </div>
-              <span className="text-[11px] font-bold tabular-nums w-8 text-right" style={{ color: f.color }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, fontVariantNumeric: "tabular-nums", width: "32px", textAlign: "right", color: f.color }}>
                 {f.pct}%
               </span>
             </div>
@@ -62,8 +80,11 @@ export default function MLInfo() {
         </div>
 
         {/* Pipeline note */}
-        <div className="mt-3 pt-3 border-t border-[#f1f5f9] text-[10px] text-[#94a3b8] leading-relaxed">
-          Trained on 23x24 grid (100m) over Thanisandra ward. Real GIS data: 841 road segments, 8 markets, 7757 buildings, 1023 land-use polygons.
+        <div
+          className="mt-3 pt-3"
+          style={{ borderTop: "1px solid var(--border)", fontSize: "10px", color: "var(--mu)", lineHeight: 1.6 }}
+        >
+          Trained on 23×24 grid (100m) over Thanisandra ward. Real GIS data: 841 road segments, 8 markets, 7757 buildings, 1023 land-use polygons.
         </div>
       </div>
     </div>
