@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { WardScore } from "@/types";
 
 const GRADE_CONFIG: Record<string, { color: string; label: string }> = {
@@ -8,8 +9,18 @@ const GRADE_CONFIG: Record<string, { color: string; label: string }> = {
   F: { color: "#ef4444", label: "Critical" },
 };
 
+type SortKey = "wascore" | "resolved" | "dumps";
+
 export default function WardLeaderboard({ wards }: { wards: WardScore[] }) {
-  const sorted = [...wards].sort((a, b) => b.wascore - a.wascore);
+  const [sortBy, setSortBy] = useState<SortKey>("wascore");
+
+  const sorted = [...wards].sort((a, b) => {
+    if (sortBy === "wascore")  return b.wascore - a.wascore;
+    if (sortBy === "resolved") return b.pct_resolved - a.pct_resolved;
+    return b.active_dumps - a.active_dumps;
+  });
+
+  const avgScore = Math.round(wards.reduce((s, w) => s + w.wascore, 0) / wards.length);
 
   return (
     <div className="card">
@@ -18,7 +29,22 @@ export default function WardLeaderboard({ wards }: { wards: WardScore[] }) {
           <span className="card-title">Ward Accountability</span>
           <div style={{ fontSize: "9px", color: "var(--mu)", marginTop: "1px" }}>Higher WAScore = worse performance</div>
         </div>
-        <span className="badge badge-blue">{wards.length} wards</span>
+        <div className="flex items-center gap-1.5">
+          {(["wascore", "dumps", "resolved"] as SortKey[]).map((key) => (
+            <button
+              key={key}
+              onClick={() => setSortBy(key)}
+              className="px-2 py-0.5 rounded text-[9px] font-semibold transition-colors"
+              style={{
+                background: sortBy === key ? "var(--primary-soft)" : "transparent",
+                color: sortBy === key ? "#1d4ed8" : "var(--mu)",
+                border: `1px solid ${sortBy === key ? "rgba(29,78,216,0.25)" : "transparent"}`,
+              }}
+            >
+              {key === "wascore" ? "Score" : key === "dumps" ? "Dumps" : "Resolved"}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div>
@@ -133,12 +159,17 @@ export default function WardLeaderboard({ wards }: { wards: WardScore[] }) {
       {/* Footer */}
       <div
         className="px-4 py-2 flex items-center justify-between"
-        style={{ borderTop: "1px solid var(--border-light)", background: "rgba(255,255,255,0.01)" }}
+        style={{ borderTop: "1px solid var(--border-light)" }}
       >
         <span style={{ fontSize: "9px", color: "var(--mu)" }}>
-          Formula: 2.5×dumps + 0.8×gap_hrs + 1.2×age_days − 30×resolved%
+          2.5×dumps + 0.8×gap + 1.2×age − 30×resolved%
         </span>
-        <span style={{ fontSize: "9px", fontWeight: 600, color: "var(--teal)" }}>WAScore</span>
+        <div className="flex items-center gap-1.5">
+          <span style={{ fontSize: "9px", color: "var(--mu)" }}>Ward avg</span>
+          <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--tx)", fontVariantNumeric: "tabular-nums" }}>
+            {avgScore}
+          </span>
+        </div>
       </div>
     </div>
   );
