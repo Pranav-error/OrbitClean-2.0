@@ -51,9 +51,31 @@ export default function RouteOptimizer({ solution, onToggleRoutes, showRoutes }:
               </div>
             ))}
           </div>
-          <div className="text-[10px] leading-relaxed rounded-lg px-3 py-2" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", color: "var(--tx2)" }}>
+          <div className="text-[10px] leading-relaxed rounded-lg px-3 py-2 mb-2" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", color: "var(--tx2)" }}>
             BBMP Spec: {f.bbmp_rule} · 500kg capacity · {f.wet_collection} · {f.dry_collection}
           </div>
+
+          {/* Savings vs unoptimised baseline */}
+          {s && (
+            <div className="rounded-lg px-3 py-2.5" style={{ background: "var(--success-soft)", border: "1px solid rgba(22,163,74,0.2)" }}>
+              <div className="flex items-center justify-between mb-2">
+                <span style={{ fontSize: "10px", fontWeight: 600, color: "#16a34a" }}>Route Savings vs Baseline</span>
+                <span className="badge badge-green">Clarke-Wright</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { label: "km saved", value: s.distance_saved_km },
+                  { label: "fuel (L)", value: s.fuel_saved_litres },
+                  { label: "CO₂ saved", value: `${s.co2_saved_kg}kg` },
+                ].map((item) => (
+                  <div key={item.label} className="text-center">
+                    <div style={{ fontSize: "13px", fontWeight: 700, color: "#16a34a", fontVariantNumeric: "tabular-nums" }}>{item.value}</div>
+                    <div style={{ fontSize: "8.5px", color: "var(--mu)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
