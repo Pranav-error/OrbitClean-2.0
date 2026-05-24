@@ -140,6 +140,35 @@ export default function CleanupTracker({ apiBase = "http://localhost:8000", onMi
             </div>
           </div>
 
+          {/* Completion progress bar */}
+          {stats.total > 0 && (
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span style={{ fontSize: "9.5px", color: "var(--mu)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Completion
+                </span>
+                <span style={{ fontSize: "10px", fontWeight: 700, color: "#10b981", fontVariantNumeric: "tabular-nums" }}>
+                  {Math.round((stats.verified / stats.total) * 100)}%
+                </span>
+              </div>
+              <div style={{ height: "6px", borderRadius: "3px", background: "var(--border)", overflow: "hidden" }}>
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "3px",
+                    width: `${(stats.verified / stats.total) * 100}%`,
+                    background: "linear-gradient(90deg, #10b981, #059669)",
+                    transition: "width 0.5s ease",
+                  }}
+                />
+              </div>
+              <div className="flex justify-between mt-1">
+                <span style={{ fontSize: "8.5px", color: "var(--mu)" }}>0</span>
+                <span style={{ fontSize: "8.5px", color: "var(--mu)" }}>{stats.total} total</span>
+              </div>
+            </div>
+          )}
+
           {/* Generate button */}
           <button
             onClick={handleGenerate}
