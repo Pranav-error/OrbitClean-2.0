@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import type { DumpSite } from "@/types";
+
+type QuickFilter = "all" | "critical" | "hazardous" | "heavy";
 
 const STREAM_CONFIG: Record<string, { color: string; bg: string; label: string }> = {
   "Dry/Blue":       { color: "#3b82f6", bg: "rgba(59,130,246,0.12)",  label: "Dry" },
@@ -21,6 +26,13 @@ function riskLabel(score: number) {
   return "LOW";
 }
 
+const QUICK_FILTERS: { key: QuickFilter; label: string }[] = [
+  { key: "all",       label: "All"       },
+  { key: "critical",  label: "Critical"  },
+  { key: "hazardous", label: "Hazardous" },
+  { key: "heavy",     label: "Heavy >5T" },
+];
+
 export default function DumpList({
   dumps,
   onSelect,
@@ -28,8 +40,16 @@ export default function DumpList({
   dumps: DumpSite[];
   onSelect: (d: DumpSite) => void;
 }) {
+  const [filter, setFilter] = useState<QuickFilter>("all");
+
   const active = dumps
-    .filter((d) => d.status === "Active")
+    .filter((d) => {
+      if (d.status !== "Active") return false;
+      if (filter === "critical")  return d.risk_score >= 0.85;
+      if (filter === "hazardous") return d.swm_stream === "Hazardous/Black";
+      if (filter === "heavy")     return (d.estimated_weight_tonnes ?? 0) > 5;
+      return true;
+    })
     .sort((a, b) => b.risk_score - a.risk_score);
 
   if (active.length === 0) {
@@ -65,6 +85,27 @@ export default function DumpList({
           </span>
           <span className="badge badge-red">{active.length} active</span>
         </div>
+      </div>
+
+      {/* Quick-filter toolbar */}
+      <div
+        className="flex items-center gap-1.5 px-3 py-2"
+        style={{ borderBottom: "1px solid var(--border-light)" }}
+      >
+        {QUICK_FILTERS.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setFilter(key)}
+            className="px-2 py-0.5 rounded text-[9px] font-semibold transition-colors"
+            style={{
+              background: filter === key ? "var(--primary-soft)" : "transparent",
+              color: filter === key ? "#1d4ed8" : "var(--mu)",
+              border: `1px solid ${filter === key ? "rgba(29,78,216,0.25)" : "transparent"}`,
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       <div>
