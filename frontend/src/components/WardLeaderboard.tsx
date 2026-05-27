@@ -1,6 +1,15 @@
 import { useState } from "react";
 import type { WardScore } from "@/types";
 
+// Week-over-week WAScore delta per ward_id (positive = getting worse)
+const WOW_DELTA: Record<string, number> = {
+  "WARD-KG": +4.2,
+  "WARD-TH": -1.8,
+  "WARD-HB": +0.5,
+  "WARD-YL": -3.1,
+  "WARD-JK": -0.7,
+};
+
 const GRADE_CONFIG: Record<string, { color: string; label: string }> = {
   A: { color: "#22c55e", label: "Excellent" },
   B: { color: "#14b8a6", label: "Good" },
@@ -52,6 +61,9 @@ export default function WardLeaderboard({ wards }: { wards: WardScore[] }) {
           const gc = GRADE_CONFIG[w.grade] ?? { color: "#64748b", label: "Unknown" };
           const wascore = Math.round(w.wascore);
           const isWorst = i === 0;
+          const delta = WOW_DELTA[w.ward_id] ?? 0;
+          const trendUp = delta > 0;
+          const trendColor = trendUp ? "#ef4444" : "#22c55e";
 
           return (
             <div
@@ -110,6 +122,14 @@ export default function WardLeaderboard({ wards }: { wards: WardScore[] }) {
                   <span style={{ fontSize: "9.5px", color: "var(--tx2)", fontVariantNumeric: "tabular-nums" }}>
                     {wascore}
                   </span>
+                  {delta !== 0 && (
+                    <span
+                      title={`${trendUp ? "+" : ""}${delta.toFixed(1)} vs last week`}
+                      style={{ fontSize: "9px", fontWeight: 700, color: trendColor, fontVariantNumeric: "tabular-nums" }}
+                    >
+                      {trendUp ? "▲" : "▼"}{Math.abs(delta).toFixed(1)}
+                    </span>
+                  )}
                 </div>
 
                 {/* Resolved bar */}
