@@ -60,11 +60,25 @@ export default function RetrainStatus({ apiBase = "http://localhost:8000" }: { a
   const latest = versions[versions.length - 1];
   const progress = Math.min(((50 - imagesUntil) / 50) * 100, 100);
 
+  const urgency =
+    imagesUntil === 0   ? { label: "Retrain Ready", color: "#ef4444", bg: "rgba(239,68,68,0.12)" } :
+    imagesUntil <= 10   ? { label: "Near Threshold", color: "#f97316", bg: "rgba(249,115,22,0.12)" } :
+    imagesUntil <= 30   ? { label: "Collecting",     color: "#eab308", bg: "rgba(234,179,8,0.12)"  } :
+                          { label: "Healthy",         color: "#22c55e", bg: "rgba(34,197,94,0.12)"  };
+
   return (
     <div className="card">
       <div className="card-header">
         <span className="card-title">Self-Improving Model</span>
-        <span className="badge badge-purple">{latest.version}</span>
+        <div className="flex items-center gap-1.5">
+          <span
+            className="text-[9px] font-bold px-2 py-0.5 rounded"
+            style={{ background: urgency.bg, color: urgency.color, border: `1px solid ${urgency.color}30` }}
+          >
+            {urgency.label}
+          </span>
+          <span className="badge badge-purple">{latest.version}</span>
+        </div>
       </div>
       <div className="p-3 space-y-3">
         {/* Accuracy display */}
