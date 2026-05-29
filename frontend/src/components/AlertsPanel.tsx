@@ -51,6 +51,11 @@ export default function AlertsPanel() {
   const [alerts, setAlerts] = useState<AnomalyAlert[]>([]);
   const [loading, setLoading] = useState(true);
   const [offline, setOffline] = useState(false);
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
+
+  function dismiss(zoneId: string) {
+    setDismissed((prev) => new Set(prev).add(zoneId));
+  }
 
   useEffect(() => {
     fetch(`${API_BASE}/api/anomalies`)
@@ -66,8 +71,8 @@ export default function AlertsPanel() {
       });
   }, []);
 
-  const confirmed = alerts.filter((a) => a.true_anomaly);
-  const borderline = alerts.filter((a) => !a.true_anomaly);
+  const confirmed = alerts.filter((a) => a.true_anomaly && !dismissed.has(a.zone_id));
+  const borderline = alerts.filter((a) => !a.true_anomaly && !dismissed.has(a.zone_id));
 
   return (
     <div className="flex flex-col gap-3">
@@ -77,6 +82,9 @@ export default function AlertsPanel() {
           <span className="card-title">Isolation Forest Alerts</span>
           {confirmed.length > 0 && (
             <span className="badge badge-red">{confirmed.length} confirmed</span>
+          )}
+          {dismissed.size > 0 && (
+            <span style={{ fontSize: "9px", color: "var(--mu)" }}>{dismissed.size} reviewed</span>
           )}
         </div>
         <div className="p-3">
@@ -110,7 +118,7 @@ export default function AlertsPanel() {
             <span className="card-title">Confirmed Surge Events</span>
           </div>
           {confirmed.map((a, i) => (
-            <AlertRow key={i} alert={a} />
+            <AlertRow key={i} alert={a} onDismiss={() => dismiss(a.zone_id)} />
           ))}
         </div>
       )}
@@ -123,7 +131,7 @@ export default function AlertsPanel() {
             <span className="badge badge-amber">{borderline.length}</span>
           </div>
           {borderline.map((a, i) => (
-            <AlertRow key={i} alert={a} />
+            <AlertRow key={i} alert={a} onDismiss={() => dismiss(a.zone_id)} />
           ))}
         </div>
       )}
@@ -140,7 +148,7 @@ export default function AlertsPanel() {
   );
 }
 
-function AlertRow({ alert: a }: { alert: AnomalyAlert }) {
+function AlertRow({ alert: a, onDismiss }: { alert: AnomalyAlert; onDismiss: () => void }) {
   const color = severityColor(a);
   return (
     <div
@@ -156,12 +164,22 @@ function AlertRow({ alert: a }: { alert: AnomalyAlert }) {
             {a.week}
           </span>
         </div>
-        <span
-          className="shrink-0 text-[9px] font-bold px-2 py-0.5 rounded"
-          style={{ background: `${color}15`, color, border: `1px solid ${color}28` }}
-        >
-          {a.multiplier.toFixed(1)}× baseline
-        </span>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span
+            className="text-[9px] font-bold px-2 py-0.5 rounded"
+            style={{ background: `${color}15`, color, border: `1px solid ${color}28` }}
+          >
+            {a.multiplier.toFixed(1)}× baseline
+          </span>
+          <button
+            onClick={onDismiss}
+            title="Mark as reviewed"
+            className="text-[8.5px] px-1.5 py-0.5 rounded transition-colors"
+            style={{ color: "var(--mu)", border: "1px solid var(--border-light)" }}
+          >
+            ✓ reviewed
+          </button>
+        </div>
       </div>
       <p style={{ fontSize: "10.5px", color: "var(--tx2)", marginBottom: 3 }}>
         {a.probable_cause}
