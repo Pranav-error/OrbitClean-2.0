@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 
 interface UploadResult {
   id: string;
@@ -11,16 +11,39 @@ interface UploadResult {
 
 export default function CommunityUpload({ apiBase = "http://localhost:8000" }: { apiBase?: string }) {
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [result, setResult] = useState<UploadResult | null>(null);
   const [stats, setStats] = useState({ total_uploads: 0, verified_dumps: 0 });
+  const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && fileRef.current) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fileRef.current.files = dt.files;
+      handleUploadFile(file);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleUpload() {
     const file = fileRef.current?.files?.[0];
     if (!file) return;
+    await handleUploadFile(file);
+  }
 
+  async function handleUploadFile(file: File) {
     setUploading(true);
+    setUploadProgress(0);
     setResult(null);
+
+    // Simulate upload progress
+    const interval = setInterval(() => {
+      setUploadProgress((p) => Math.min(p + 20, 90));
+    }, 200);
 
     let lat = 13.059, lon = 77.630;
     try {
@@ -47,6 +70,9 @@ export default function CommunityUpload({ apiBase = "http://localhost:8000" }: {
       });
     }
 
+    clearInterval(interval);
+    setUploadProgress(100);
+
     try {
       const res = await fetch(`${apiBase}/api/community/stats`);
       if (res.ok) setStats(await res.json());
@@ -54,7 +80,7 @@ export default function CommunityUpload({ apiBase = "http://localhost:8000" }: {
       setStats((s) => ({ ...s, total_uploads: s.total_uploads + 1 }));
     }
 
-    setUploading(false);
+    setTimeout(() => { setUploading(false); setUploadProgress(0); }, 400);
   }
 
   return (
@@ -68,17 +94,43 @@ export default function CommunityUpload({ apiBase = "http://localhost:8000" }: {
           Upload a geo-tagged photo to validate ML-predicted dumps. 3+ community reports within 200m = verified site.
         </div>
 
-        {/* Upload button */}
-        <div>
-          <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleUpload} />
-          <button
-            onClick={() => fileRef.current?.click()}
-            disabled={uploading}
-            className="w-full py-2.5 rounded-lg bg-[#0ea5e9] text-white text-[11px] font-semibold hover:bg-[#0284c7] disabled:opacity-50 transition-colors"
-          >
-            {uploading ? "Uploading..." : "Take Photo / Upload"}
-          </button>
+        {/* Drag-and-drop zone */}
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          onClick={() => fileRef.current?.click()}
+          className="rounded-lg border-2 border-dashed flex flex-col items-center justify-center gap-1.5 py-4 cursor-pointer transition-colors"
+          style={{
+            borderColor: dragOver ? "#0ea5e9" : "rgba(14,165,233,0.3)",
+            background: dragOver ? "rgba(14,165,233,0.06)" : "transparent",
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <span style={{ fontSize: "10px", color: "#0ea5e9", fontWeight: 600 }}>
+            {dragOver ? "Drop to upload" : "Drag & drop or click to upload"}
+          </span>
         </div>
+
+        <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleUpload} />
+
+        {/* Upload progress bar */}
+        {uploading && (
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span style={{ fontSize: "9px", color: "var(--mu)" }}>Uploading…</span>
+              <span style={{ fontSize: "9px", color: "#0ea5e9", fontVariantNumeric: "tabular-nums" }}>{uploadProgress}%</span>
+            </div>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--border-light)" }}>
+              <div
+                className="h-full rounded-full transition-all"
+                style={{ width: `${uploadProgress}%`, background: "linear-gradient(to right, #38bdf8, #0ea5e9)" }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Result */}
         {result && (
